@@ -1,7 +1,8 @@
-
-
 export default function Footer() {
   return (
-    <div>Tous droits réservés : github - contact</div>
-  )
+    <footer>
+      <p>Tous droits réservés - Réaliser par Martial Wehrling - Github - Contact </p>
+     
+    </footer>
+  );
 }
