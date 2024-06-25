@@ -1,9 +1,9 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Header() {
   return (
-    <div>
+    <header >
       <h1>Image de Géolocalisation</h1>
-    </div>
+    </header>
   );
 }
