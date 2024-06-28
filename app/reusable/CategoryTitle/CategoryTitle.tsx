@@ -7,6 +7,6 @@ type ChildrenProps ={
 export default function CategoryTitle({level,children}: ChildrenProps) {
   const Tag = `h${level}` as keyof JSX.IntrinsicElements;
   return (
-    <Tag>{children}</Tag>
+    <Tag className="poppins-regular">{children}</Tag>
   )
 }
