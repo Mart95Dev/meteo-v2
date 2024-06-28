@@ -7,7 +7,6 @@ import BoxSearchClimatCountryInformation from "./components/BoxSearchClimatCount
 import BoxClimatCountryInformation from "./reusable/BoxClimatCountryInformation/BoxClimatCountryInformation";
 import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
 
-
 export default function Home() {
   //state
   const [browser, setBrowser] = useState("");
@@ -26,10 +25,6 @@ export default function Home() {
   //pour rectrouver les donnees météo
   //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
 
-
-
-
-
   useEffect(() => {
     const browser = window.navigator.language.slice(0, 2);
     setBrowser(browser);
@@ -46,15 +41,17 @@ export default function Home() {
   useEffect(() => {
     console.log(coordinates);
     console.log(browser);
-  }, [browser,coordinates]);
+  }, [browser, coordinates]);
 
   return (
     <>
       <Header />
       <main className="lato-regular">
-        <CategoryTitle title="Météo de votre géolocalisation actuelle :" />
+        <CategoryTitle level={1}>Météo de votre géolocalisation actuelle :</CategoryTitle>
         <BoxClimatCountryInformation />
-        <CategoryTitle title="Rechercher la météo de la ville ou du pays :" />
+        <CategoryTitle level={2}>
+          Rechercher la météo de la ville ou du pays :
+        </CategoryTitle>
         <BoxSearchClimatCountryInformation />
       </main>
       <Footer />
