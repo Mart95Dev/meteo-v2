@@ -75,7 +75,7 @@ main {
 
 footer {
   display: flex;
-  align-items:flex-end;
+  align-items: flex-end;
   justify-content: center;
   font-size: 11px;
   height: 45px;
@@ -91,10 +91,60 @@ footer {
 /* ////Box Climat Country Information////// */
 
 .weather-box {
+  font-size: 12px;
   background-color: var(--color-background-box);
   height: 260px;
+  display: grid;
+  grid-template-columns: 15% 10% 25% 10% 25% 15%;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas:
+    "country-flag . country-name . capital-name ."
+    "weather-type weather-type weather-type weather-type weather-type weather-type"
+    "weather-icon . temperature-label . climate-label ."
+    "weather-icon . . . rain ."
+    "weather-icon . real-feel . . ."
+    "weather-icon . . . wind ."
+    "weather-icon . feels-like . . ."
+    "weather-icon . . . humidity .";
 }
 
+.country-flag {
+  grid-area: country-flag;
+}
+.country-name {
+  grid-area: country-name;
+}
+.capital-name {
+  grid-area: capital-name;
+}
+.weather-type {
+  grid-area: weather-type;
+}
+.weather-icon {
+  grid-area: weather-icon;
+}
+.temperature-label {
+  grid-area: temperature-label;
+}
+.climate-label {
+  grid-area: climate-label;
+}
+.rain {
+  grid-area: rain;
+}
+.wind {
+  grid-area: wind;
+}
+.real-feel {
+  grid-area: real-feel;
+}
+
+.feels-like {
+  grid-area: feels-like;
+}
+.humidity {
+  grid-area: humidity;
+}
 
 .icon-search-localisation {
   height: 25px;
