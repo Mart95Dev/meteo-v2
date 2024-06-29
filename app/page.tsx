@@ -6,6 +6,8 @@ import Header from "./Layout/Header/Header";
 import BoxSearchClimatCountryInformation from "./components/BoxSearchClimatCountryInformation/BoxSearchClimatCountryInformation";
 import BoxClimatCountryInformation from "./reusable/BoxClimatCountryInformation/BoxClimatCountryInformation";
 import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
+import { TbMapSearch } from "react-icons/tb";
+import { IoLocation } from "react-icons/io5";
 
 export default function Home() {
   //state
@@ -47,9 +49,17 @@ export default function Home() {
     <>
       <Header />
       <main className="lato-regular">
-        <CategoryTitle level={1}>Météo de votre géolocalisation actuelle :</CategoryTitle>
+        <CategoryTitle level={1}>
+          <span>
+          <IoLocation className="icon-search-localisation" />
+          </span>
+          Météo de votre géolocalisation actuelle :
+        </CategoryTitle>
         <BoxClimatCountryInformation />
         <CategoryTitle level={2}>
+          <span>
+          <TbMapSearch className="icon-search-localisation" />
+          </span>
           Rechercher la météo de la ville ou du pays :
         </CategoryTitle>
         <BoxSearchClimatCountryInformation />
