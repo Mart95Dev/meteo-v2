@@ -55,24 +55,70 @@
 body {
   min-width: 360px;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   background: linear-gradient(
     180deg,
     rgba(0, 212, 255, 1) 60%,
     rgba(255, 251, 251, 1) 100%
   );
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "aside"
+    "footer";
+  grid-template-rows: auto 1fr auto;
+}
+
+@media (min-width: 701px) {
+  body {
+    grid-template-areas:
+      "header aside"
+      "main aside"
+      "footer footer";
+    grid-template-columns: 2fr 1fr;
+    column-gap: 20px;
+  }
+
+  /* ////ASIDE */
+
+  aside {
+    grid-area: aside;
+    row-gap: 25px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .history-box {
+    grid-row: 1;
+    background-color: red;
+    min-height: 558px;
+    width: 100%;
+  }
+
+  .map-box {
+    height: auto;
+    grid-row: 2;
+  }
+
+ /* //////////// */
 }
 
 header {
+  grid-area: header;
   height: 175px;
 }
 
 main {
+  grid-area: main;
   flex: 1;
 }
 
+aside {
+  grid-area: aside;
+}
+
 footer {
+  grid-area: footer;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -87,12 +133,32 @@ footer {
   font-size: 1rem;
   height: 41px;
 }
+
+.image-location-container {
+  position: relative; /* Nécessaire pour que fill fonctionne correctement */
+  width: 100%; /* Largeur initiale de l'image à 100% */
+  min-width: 360px;
+  height: 175px; /* Hauteur fixe de l'image */
+}
+
+.image-location-container img {
+  object-fit: cover;
+}
+
+.image-location-container,
+.weather-box,
+.search-box {
+  width: 100%;
+}
+
 /* ////Box Climat Country Information////// */
 
 .weather-box {
   font-size: 12px;
   background-color: var(--color-background-box);
   height: 260px;
+  margin: 6px 0 6px 0;
+
   display: grid;
   grid-template-columns: 15% 10% 25% 15% 25% 10%;
   grid-template-rows: repeat(8, 1fr);
@@ -209,6 +275,7 @@ footer {
 
 .input-search {
   min-width: calc(360px - 158px);
+  width: 100%;
   border: none;
   height: 27px;
 }
@@ -230,3 +297,4 @@ input[type="search"]::placeholder {
 }
 
 /* ///////////////////////////////////////// */
+

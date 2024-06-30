@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {useWindowSize} from './hook/useWindowSize'
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
 import BoxSearchClimatCountryInformation from "./components/BoxSearchClimatCountryInformation/BoxSearchClimatCountryInformation";
@@ -8,6 +9,8 @@ import BoxClimatCountryInformation from "./reusable/BoxClimatCountryInformation/
 import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
 import { TbMapSearch } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
+import Aside from "./Layout/Aside/Aside";
+import { log } from "console";
 
 export default function Home() {
   //state
@@ -20,6 +23,9 @@ export default function Home() {
     longitude: null,
   });
 
+  const { width } = useWindowSize();
+  const showAside = width >= 701; // Afficher l'aside si la largeur est >= 701px  
+
   //functions
   //fetch api
   //pour retrouver le nom de la ville et code pays
@@ -30,6 +36,7 @@ export default function Home() {
   useEffect(() => {
     const browser = window.navigator.language.slice(0, 2);
     setBrowser(browser);
+   
     navigator.geolocation.getCurrentPosition((position) => {
       const newCoordinates = {
         latitude: position.coords.latitude,
@@ -43,6 +50,7 @@ export default function Home() {
   useEffect(() => {
     console.log(coordinates);
     console.log(browser);
+    
   }, [browser, coordinates]);
 
   return (
@@ -51,19 +59,23 @@ export default function Home() {
       <main className="lato-regular">
         <CategoryTitle level={1}>
           <span>
-          <IoLocation className="icon-search-localisation" />
+            <IoLocation className="icon-search-localisation" />
           </span>
           Météo de votre géolocalisation actuelle :
         </CategoryTitle>
         <BoxClimatCountryInformation />
         <CategoryTitle level={2}>
           <span>
-          <TbMapSearch className="icon-search-localisation" />
+            <TbMapSearch className="icon-search-localisation" />
           </span>
           Rechercher la météo de la ville ou du pays :
         </CategoryTitle>
         <BoxSearchClimatCountryInformation />
+        <BoxClimatCountryInformation/>
+        <BoxClimatCountryInformation/>
+        <BoxClimatCountryInformation/>
       </main>
+      {showAside && <Aside />}
       <Footer />
     </>
   );
