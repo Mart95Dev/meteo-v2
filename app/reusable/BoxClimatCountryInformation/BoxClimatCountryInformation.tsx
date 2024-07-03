@@ -17,24 +17,24 @@ export default function BoxClimatCountryInformation() {
         <span>Température</span>
         
       </div>
-      <div className="lato-regular real-feel">
+      <div className="real-feel">
         <span>Réelle :</span>
         
       </div>
-      <div className="feels-like lato-regular">
+      <div className="feels-like">
         <span>Ressenti:</span>
         
       </div>
       <div className="climate-label poppins-semibold">Climat</div>
-      <div className="rain lato-regular">
+      <div className="rain ">
         <span>Pluie:</span>
         
       </div>
-      <div className="wind lato-regular">
+      <div className="wind ">
         <span>Vent:</span>
         
       </div>
-      <div className="humidity lato-regular">
+      <div className="humidity ">
         <span>Humidité:</span>
        
       </div>

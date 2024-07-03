@@ -11,10 +11,26 @@
   --color-background-box: #fffbfb;
   --color-style: #90ee90;
   --color-input-background: #f2f2f2;
+  --font-poppins: "Poppins", sans-serif;
+  --font-lato: "Lato", sans-serif;
+  --font-default: var(--font-lato);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
 }
 
 /* /// -fonts- ////////////////////*/
-.poppins-regular {
+.poppins-regular { font-family: var(--font-poppins); font-weight: var(--font-weight-regular); }
+.poppins-medium { font-family: var(--font-poppins); font-weight: var(--font-weight-medium); }
+.poppins-semibold { font-family: var(--font-poppins); font-weight: var(--font-weight-semibold); }
+.lato-light { font-family: var(--font-lato); font-weight: 300; } /* Lato Light n'a pas de variable */
+.lato-regular { font-family: var(--font-lato); font-weight: var(--font-weight-regular); }
+.lato-bold { font-family: var(--font-lato); font-weight: var(--font-weight-bold); }
+
+/* .poppins-regular {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -48,11 +64,13 @@
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
-}
+} */
 
 /* //////////////////////////////////// */
 
 body {
+  font-family: var(--font-default);
+  font-weight: var(--font-weight-regular);
   min-width: 360px;
   min-height: 100vh;
   background: linear-gradient(
@@ -83,16 +101,52 @@ body {
 
   aside {
     grid-area: aside;
-    row-gap: 25px;
+    /* row-gap: 25px; */
     display: grid;
     grid-template-rows: auto 1fr;
   }
 
   .history-box {
     grid-row: 1;
-    background-color: red;
+    background-color: var(--color-background-box);
     min-height: 558px;
     width: 100%;
+    font-size: 14px;
+  }
+
+  .history-box ul {
+    padding-top: 10px;
+    list-style-type: none;
+  }
+
+  .header-row span,
+  .data-row span {
+    width: 25%; /* Répartir l'espace équitablement entre les colonnes */
+    text-align: center;
+  }
+
+  .header-row,
+  .data-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .header-row {
+    font-weight: bold;
+  }
+
+  .data-row{
+    font-size: 0.75rem;
+  }
+
+  .title-history {
+    padding-top: 10px;
+   text-align: center;
+    margin: auto;
+    text-decoration: underline;
+    font-size: 0.9rem;
   }
 
   .map-box {
@@ -100,7 +154,7 @@ body {
     grid-row: 2;
   }
 
- /* //////////// */
+  /* //////////// */
 }
 
 header {
@@ -174,7 +228,8 @@ footer {
 }
 
 .weather-box,
-.weather-type {
+.weather-type,
+.history-box {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -297,4 +352,3 @@ input[type="search"]::placeholder {
 }
 
 /* ///////////////////////////////////////// */
-
