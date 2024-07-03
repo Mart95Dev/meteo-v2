@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {useWindowSize} from './hook/useWindowSize'
+import { useEffect } from "react";
+import { useWindowSize } from "./hook/useWindowSize";
+import useGeolocationStore from "./store/useGeolocationStore";
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
 import BoxSearchClimatCountryInformation from "./components/BoxSearchClimatCountryInformation/BoxSearchClimatCountryInformation";
@@ -10,21 +11,13 @@ import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
 import { TbMapSearch } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
 import Aside from "./Layout/Aside/Aside";
-import { log } from "console";
+import Data from "./data/languages.json";
 
 export default function Home() {
   //state
-  const [browser, setBrowser] = useState("");
-  const [coordinates, setCoordinates] = useState<{
-    latitude: number | null;
-    longitude: number | null;
-  }>({
-    latitude: null,
-    longitude: null,
-  });
-
+  const { language, setCoordinates, setLanguage } = useGeolocationStore();
   const { width } = useWindowSize();
-  const showAside = width >= 701; // Afficher l'aside si la largeur est >= 701px  
+  const showAside = width >= 701; // Afficher l'aside si la largeur est >=
 
   //functions
   //fetch api
@@ -35,23 +28,23 @@ export default function Home() {
 
   useEffect(() => {
     const browser = window.navigator.language.slice(0, 2);
-    setBrowser(browser);
-   
-    navigator.geolocation.getCurrentPosition((position) => {
-      const newCoordinates = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      };
-      setCoordinates(newCoordinates);
-    });
-  }, []);
+    setLanguage(browser);
 
-  // *** useEffect temporaire afin de visualiser les resultats
-  useEffect(() => {
-    console.log(coordinates);
-    console.log(browser);
     
-  }, [browser, coordinates]);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCoordinates(position.coords.latitude, position.coords.longitude);
+      },
+      (error) => {
+        console.error("Erreur de géolocalisation :", error);
+      }
+    );
+    const countryLanguage =
+      (Data as { languages: Record<string, string> }).languages[language] ||
+      "en";
+   
+
+  }, [setCoordinates, setLanguage,language]);
 
   return (
     <>
@@ -71,9 +64,9 @@ export default function Home() {
           Rechercher la météo de la ville ou du pays :
         </CategoryTitle>
         <BoxSearchClimatCountryInformation />
-        <BoxClimatCountryInformation/>
-        <BoxClimatCountryInformation/>
-        <BoxClimatCountryInformation/>
+        <BoxClimatCountryInformation />
+        <BoxClimatCountryInformation />
+        <BoxClimatCountryInformation />
       </main>
       {showAside && <Aside />}
       <Footer />
