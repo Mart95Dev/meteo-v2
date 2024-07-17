@@ -15,31 +15,42 @@ import Aside from "./Layout/Aside/Aside";
 
 export default function Home() {
   //state
-  const [isGeolocationEnabled,setIsGeolocationEnabled]= useState(true);
   const[error, setError]= useState('');
   const {
     latitude,
     longitude,
     language,
+    flag,
+    country,
+    country_code,
+    city,
+    icon,
+    temp_feel,
+    temp_real,
+    rain,
+    wind,
+    humidity,
     setCoordinates,
     setLanguage,
+    setFlag,
     setCity,
-    setCountry
+    setCountry,
+    setCountry_code, 
+    setIsGeolocationEnabled,
+    setIcon,
+    setTempFeel,
+    setTempReal,
+    setRain,
+    setWind,
+    setHumidity
   } = useGeolocationStore();
   const { width } = useWindowSize();
   const showAside = width >= 701; // Afficher l'aside si la largeur est >=
   const apiKey = process.env.NEXT_PUBLIC_API_KEY_OPENWEATHER;
- 
-
-  //functions
-  //fetch api
-  //pour retrouver le nom de la ville et code pays
-  //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-  
+   
 
   useEffect(() => {
     const browserLanguage = window.navigator.language.slice(0, 2);
-    // const isLanguageSupported = Data.languages.includes(browserLanguage)
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -55,14 +66,13 @@ export default function Home() {
           const ipAddress = data.ip;
   
           const locationIP = await fetch(`http://ip-api.com/json/${ipAddress}`);
-          const locationIpResponse = await locationIP.json();
-          console.log(locationIpResponse);
+          const locationIpResponse = await locationIP.json()
           
           setCity(locationIpResponse.city);
           setCountry(locationIpResponse.country);
         } catch (ipError) {
           console.error('Erreur lors de la récupération de l\'adresse IP :', ipError);
-          setError('Impossible de récupérer les données de localisation par votre Ip ou la location via votre naviagateur.'); 
+          setError('Impossible de récupérer les données de localisation par votre Ip ou la localisation via votre naviagateur.'); 
         }
       },
     );
@@ -76,8 +86,8 @@ export default function Home() {
       language: string
     ) => {
       try {
-        const response = await fetch(
-          `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}&lang=${language}`
+            const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=${language}`
         );
 
         if (!response.ok) {
@@ -87,11 +97,15 @@ export default function Home() {
         }
 
         const data = await response.json();
-        console.log(data[0].name);
+        console.log(data);
+        
 
         // Extraire le nom de la ville de la réponse de l'API
-        const cityName = data[0]?.name || "Ville inconnue"; // Gérer le cas où la ville n'est pas trouvée
-        return setCity(cityName);
+        // const cityName = data[0]?.name || "Ville inconnue"; // Gérer le cas où la ville n'est pas trouvée
+        // const country_code = data[0]?.country || "code inconnu";
+        //  setCity(cityName);
+        //  setCountry_code(country_code);
+        //  return;
 
       } catch (error) {
         console.error(
@@ -101,14 +115,27 @@ export default function Home() {
         throw error; // Propager l'erreur pour la gestion dans useEffect
       }
     };
+
+    const fetchWeatherData = async () => {
+      try {
+        // ... (votre logique de récupération de données météo en utilisant city, language et apiKey)
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données météo :', error);
+        setError('Impossible de récupérer les données météo.');
+      }
+    };
     if (latitude !== null && longitude !== null && language && apiKey) {
       fechtCountryWithLatitudeAndLongitude(latitude, longitude, language);
     }
-  }, [setCoordinates, setLanguage,setCity, setCountry, language, latitude, longitude, apiKey]);
+  }, [setCoordinates, setLanguage,setCity, setCountry,setCountry_code, language, latitude, longitude, apiKey]);
 
   ///////////////
   useEffect(() => {
     console.log(language);
+    console.log(country);
+    console.log(city);
+    console.log(country_code);
+
   });
   //////////////
 
