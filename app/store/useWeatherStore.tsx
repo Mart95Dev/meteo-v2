@@ -1,5 +1,5 @@
-import {create} from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface WeatherData {
   id: number;
@@ -14,23 +14,11 @@ interface WeatherData {
   rain: number | null;
   wind: number | null;
   humidity: number | null;
-  setFlag: (flag: string) => void;
-  setCountry: (country: string) => void;
-  setCity: (city: string) => void;
-  setIcon: (icon: string) => void;
-  setTempReal: (temp_real: number) => void;
-  setTempFeel: (temp_feel: number) => void;
-  setRain: (rain: number) => void;
-  setWind: (wind: number) => void;
-  setHumidity: (humidity: number) => void;
- }
+}
 
- interface WeatherState {
+interface WeatherState {
   currentWeather: WeatherData | null;
   searchHistory: WeatherData[];
-  setWeatherData: (data: WeatherData) => void;
-  addSearchHistory: (data: WeatherData) => void;
-  // ... autres actions éventuelles
 }
 
 const useWeatherStore = create<WeatherState>()(
@@ -38,11 +26,12 @@ const useWeatherStore = create<WeatherState>()(
     (set) => ({
       currentWeather: null,
       searchHistory: [],
-      setWeatherData: (data) => set({ currentWeather: data }),
-      addSearchHistory: (data) => set((state) => ({ searchHistory: [...state.searchHistory, data] })),
+      setWeatherData: (data: WeatherData) => set({ currentWeather: data }),
+      addSearchHistory: (data: WeatherData) =>
+        set((state) => ({ searchHistory: [...state.searchHistory, data] })),
     }),
     {
-      name: 'weather-storage', // Persister uniquement l'historique de recherche
+      name: "weather-storage", // Persister uniquement l'historique de recherche
       partialize: (state) => ({ searchHistory: state.searchHistory }), // Sérialiser uniquement searchHistory
     }
   )
