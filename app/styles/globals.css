@@ -317,3 +317,20 @@ input[type="search"]::placeholder {
 }
 
 /* ///////////////////////////////////////// */
+ .not-found-flag{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-primary);  
+  color: var(--color-background-box);
+  font-family: var(--font-poppins);
+  font-weight: var(--font-weight-semibold);
+  font-size: 1rem;
+ }
+
+ 
+  
+ 
+ 
