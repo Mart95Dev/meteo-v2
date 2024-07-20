@@ -14,6 +14,7 @@ import Aside from "./Layout/Aside/Aside";
 import CodeFlags from "./data/codeFlags.json";
 import Flag from "./components/Flag/Flag";
 import useFlagStore from "./store/useFlagStore";
+import useLanguageBrowserStore from "./store/useLanguageBrowser";
 
 export default function Home() {
   //state
@@ -21,13 +22,11 @@ export default function Home() {
 
   const {
     latitude,
-    longitude,
-    language_browser,
+    longitude,    
     country,
     country_code,
     city,
     setCoordinates,
-    setlanguageBrowser,
     setCity,
     setCountry,
     setCountry_code,
@@ -39,6 +38,9 @@ export default function Home() {
     setFlagGeolocalisation,
     setNoFlagGeolocalisation,
   } = useFlagStore();
+
+const {language_browser,setlanguageBrowser} = useLanguageBrowserStore();
+
   const { width } = useWindowSize();
   const showAside = width >= 701; // Afficher l'aside si la largeur est >=
   const apiKey = process.env.NEXT_PUBLIC_API_KEY_OPENWEATHER;
@@ -100,6 +102,16 @@ export default function Home() {
         const data = await response.json();
         console.log(data);
 
+        // const responseWeatherData = {
+        //   temperature: ,
+        //   icon:,
+        //   temp_real: ,
+        //   temp_feel: ,
+        //   rain: ,
+        //   wind: ,
+        //   humidity: ,
+        // }
+
         // Extraire le nom de la ville de la réponse de l'API
         // const cityName = data[0]?.name || "Ville inconnue"; // Gérer le cas où la ville n'est pas trouvée
         // const country_code = data[0]?.country || "code inconnu";
@@ -146,7 +158,7 @@ export default function Home() {
   ////////////
   ///////////////
   useEffect(() => {
-    console.log(language);
+    console.log(language_browser);
     console.log(country);
     console.log(city);
     console.log(country_code);
