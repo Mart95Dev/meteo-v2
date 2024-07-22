@@ -15,6 +15,7 @@ import CodeFlags from "./data/codeFlags.json";
 import Flag from "./components/Flag/Flag";
 import useFlagStore from "./store/useFlagStore";
 import useLanguageBrowserStore from "./store/useLanguageBrowser";
+import useCountryStore from "./store/useCountryStore";
 
 export default function Home() {
   //state
@@ -22,14 +23,10 @@ export default function Home() {
 
   const {
     latitude,
-    longitude,    
-    country,
-    country_code,
+    longitude,
     city,
     setCoordinates,
     setCity,
-    setCountry,
-    setCountry_code,
     setIsGeolocationEnabled,
   } = useGeolocationStore();
 
@@ -39,7 +36,9 @@ export default function Home() {
     setNoFlagGeolocalisation,
   } = useFlagStore();
 
-const {language_browser,setlanguageBrowser} = useLanguageBrowserStore();
+  const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
+
+  const { geo_country, geo_country_code,geo_city,setGeoCountry,setGeoCountryCode,setGeoCity } = useCountryStore();
 
   const { width } = useWindowSize();
   const showAside = width >= 701; // Afficher l'aside si la largeur est >=
@@ -66,9 +65,9 @@ const {language_browser,setlanguageBrowser} = useLanguageBrowserStore();
           const locationIP = await fetch(`http://ip-api.com/json/${data.ip}`);
           const locationIpResponseJson = await locationIP.json();
 
-          setCity(locationIpResponseJson.city);
-          setCountry(locationIpResponseJson.country);
-          setCountry_code(locationIpResponseJson.countryCode.toUpperCase());
+          setGeoCity(locationIpResponseJson.city);
+          setGeoCountry(locationIpResponseJson.country);
+          setGeoCountryCode(locationIpResponseJson.countryCode.toUpperCase());
         } catch (ipError) {
           console.error(
             "Erreur lors de la récupération de l'adresse IP :",
@@ -128,14 +127,18 @@ const {language_browser,setlanguageBrowser} = useLanguageBrowserStore();
     };
 
     if (latitude !== null && longitude !== null && language_browser && apiKey) {
-      fechtCountryWithLatitudeAndLongitude(latitude, longitude, language_browser);
+      fechtCountryWithLatitudeAndLongitude(
+        latitude,
+        longitude,
+        language_browser
+      );
     }
   }, [
     setCoordinates,
     setlanguageBrowser,
-    setCity,
-    setCountry,
-    setCountry_code,
+    setGeoCity,
+    setGeoCountry,
+    setGeoCountryCode,
     setIsGeolocationEnabled,
     language_browser,
     latitude,
@@ -147,21 +150,23 @@ const {language_browser,setlanguageBrowser} = useLanguageBrowserStore();
   useEffect(() => {
     // Logique du drapeau ici
     const testCodesFlags: boolean =
-      CodeFlags.codes_flags.includes(country_code);
+      CodeFlags.codes_flags.includes(geo_country_code);
     if (testCodesFlags) {
-      setFlagGeolocalisation(`https://countryflagsapi.netlify.app/flag/${country_code}.svg`);
+      setFlagGeolocalisation(
+        `https://countryflagsapi.netlify.app/flag/${geo_country_code}.svg`
+      );
     } else {
       setNoFlagGeolocalisation(Flag);
     }
-  }, [country_code, setFlagGeolocalisation, setNoFlagGeolocalisation]); // Dépend uniquement de country_code
+  }, [geo_country_code, setFlagGeolocalisation, setNoFlagGeolocalisation]); // Dépend uniquement de country_code
 
   ////////////
   ///////////////
   useEffect(() => {
     console.log(language_browser);
-    console.log(country);
+    console.log(geo_country);
     console.log(city);
-    console.log(country_code);
+    console.log(geo_country_code);
     console.log(flag_geolocalisation);
   });
   //////////////
