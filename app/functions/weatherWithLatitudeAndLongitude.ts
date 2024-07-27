@@ -21,29 +21,29 @@ export const weatherWithLatitudeAndLongitude = async (
       );
     }
 
-    const data = await response.json();  
-   
+    const data = await response.json();
+
     //// weather with time
     interface WeatherData {
-        dt_txt: string; // Date et heure de la prévision
-        description: string; // Température en degrés Celsius
-        icon: string; // URL de l'icône météo
-        temp_real: number | null; // Température réelle
-        temp_feel: number | null; // Température ressentie
-        rain?: { '1h': number } | null // Précipitations (en mm ou en %)
-        wind: number | null; // Vitesse du vent (en km/h)
-        humidity: number | null; // Humidité (en %)
-      }
+      dt_txt: string; // Date et heure de la prévision
+      description: string; // Température en degrés Celsius
+      icon: string; // URL de l'icône météo
+      temp_real: number | null; // Température réelle
+      temp_feel: number | null; // Température ressentie
+      rain?: { "1h": number } | null; // Précipitations (en mm ou en %)
+      wind: number | null; // Vitesse du vent (en km/h)
+      humidity: number | null; // Humidité (en %)
+    }
 
     interface ForecastAccumulator {
-        data: WeatherData | null;
-        hour: number;
-      }
-      
+      data: WeatherData | null;
+      hour: number;
+    }
 
     const currentHour = new Date().getHours(); // Obtenir l'heure actuelle (0-23)
 
-    const closestForecast = data.list.reduce((prev: ForecastAccumulator, current: WeatherData) => {
+    const closestForecast = data.list.reduce(
+      (prev: ForecastAccumulator, current: WeatherData) => {
         const forecastHour = parseInt(
           current.dt_txt.split(" ")[1].split(":")[0]
         ); // Extraire l'heure de la prévision
@@ -58,34 +58,39 @@ export const weatherWithLatitudeAndLongitude = async (
 
     const closestWeatherData = closestForecast.data;
 
-      const responseWeatherData = {
-        description: closestWeatherData.weather[0].description,
-        icon:`http://openweathermap.org/img/wn/${closestWeatherData.weather[0].icon}@2x.png`,
-        temp_real:closestWeatherData.main.temp,
-        temp_feel: closestWeatherData.main.feels_like,
-        rain: closestWeatherData.rain?.['1h'] || null,
-        wind: closestWeatherData.wind.speed,
-        humidity: closestWeatherData.main.humidity,
-      }
+    const rainText = language == "fr" ? "Aucune pluie" : "No rain forecast.";
+    const rainData = closestWeatherData.rain?.["1h"];
+    const rainValue = rainData !== undefined ? rainData : rainText;
 
-      ///extraire les données country / flag
-      const country = codeCountiresFiltered.find(c => c.iso2 === data.city.country);
-      if (country) {
-        const countryName = language === "fr" ? country.name_fr : country.name_en;
-        const countryFlag = country.flag;
-        useCountryStore.getState().setGeoCountry(countryName);
-        useFlagStore.getState().setFlagGeolocation(countryFlag)
-      } else {
-        useCountryStore.getState().setGeoCountry(language === "fr" ? "Pays inconnu": "Unknown country");
-        useFlagStore.getState().setNoFlagGeolocation(true)
-      }
-      ///////////////////////////////////
+    const responseWeatherData = {
+      description: closestWeatherData.weather[0].description,
+      icon: `http://openweathermap.org/img/wn/${closestWeatherData.weather[0].icon}@2x.png`,
+      temp_real: closestWeatherData.main.temp,
+      temp_feel: closestWeatherData.main.feels_like,
+      rain: rainValue,
+      wind: closestWeatherData.wind.speed,
+      humidity: closestWeatherData.main.humidity,
+    };
 
-      useCountryStore.getState().setGeoCity(data.city.name);
-    useGeolocationStore.getState().setLocationWeather(responseWeatherData)
+    ///extraire les données country / flag
+    const country = codeCountiresFiltered.find(
+      (c) => c.iso2 === data.city.country
+    );
+    if (country) {
+      const countryName = language === "fr" ? country.name_fr : country.name_en;
+      const countryFlag = country.flag;
+      useCountryStore.getState().setGeoCountry(countryName);
+      useFlagStore.getState().setFlagGeolocation(countryFlag);
+    } else {
+      useCountryStore
+        .getState()
+        .setGeoCountry(language === "fr" ? "Pays inconnu" : "Unknown country");
+      useFlagStore.getState().setNoFlagGeolocation(true);
+    }
+    ///////////////////////////////////
 
-    
-
+    useCountryStore.getState().setGeoCity(data.city.name);
+    useGeolocationStore.getState().setLocationWeather(responseWeatherData);
   } catch (error) {
     console.error(
       "Erreur lors de la récupération des données de la ville :",
