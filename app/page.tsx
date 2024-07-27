@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useWindowSize } from "./hook/useWindowSize";
 import useGeolocationStore from "./store/useGeolocationStore";
 import useFlagStore from "./store/useFlagStore";
 import useCountryStore from "./store/useCountryStore";
 import useLanguageBrowserStore from "./store/useLanguageBrowser";
 import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
+import useErrorStore from "./store/useErrorStore";
 
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
@@ -16,7 +17,6 @@ import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
 import { TbMapSearch } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
 import Aside from "./Layout/Aside/Aside";
-import useErrorStore from "./store/useErrorStore";
 
 export default function Home() {
   //state
