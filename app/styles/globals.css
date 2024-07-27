@@ -34,6 +34,7 @@
 /* //////////////////////////////////// */
 
 body {
+  padding: 10px;
   font-family: var(--font-default);
   font-weight: var(--font-weight-regular);
   min-width: 360px;
