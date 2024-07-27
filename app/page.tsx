@@ -3,6 +3,11 @@
 import { useEffect, useState } from "react";
 import { useWindowSize } from "./hook/useWindowSize";
 import useGeolocationStore from "./store/useGeolocationStore";
+import useFlagStore from "./store/useFlagStore";
+import useCountryStore from "./store/useCountryStore";
+import useLanguageBrowserStore from "./store/useLanguageBrowser";
+import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
+
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
 import BoxSearchClimatCountryInformation from "./components/BoxSearchClimatCountryInformation/BoxSearchClimatCountryInformation";
@@ -11,38 +16,24 @@ import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
 import { TbMapSearch } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
 import Aside from "./Layout/Aside/Aside";
-import CodeFlags from "./data/codeFlags.json";
-import Flag from "./components/Flag/Flag";
-import useFlagStore from "./store/useFlagStore";
-import useLanguageBrowserStore from "./store/useLanguageBrowser";
-import useCountryStore from "./store/useCountryStore";
+
+import codeCountiresFiltered from "./data/filtered_curiexplore-pays.json";
 
 export default function Home() {
   //state
   const [error, setError] = useState("");
 
-  const {
-    latitude,
-    longitude,
-    city,
-    setCoordinates,
-    setCity,
-    setIsGeolocationEnabled,
-  } = useGeolocationStore();
-
-  const {
-    flag_geolocalisation,
-    setFlagGeolocalisation,
-    setNoFlagGeolocalisation,
-  } = useFlagStore();
+  const { latitude, longitude, setCoordinates, setIsGeolocationEnabled,locationWeather } =
+    useGeolocationStore();  
 
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
 
-  const { geo_country, geo_country_code,geo_city,setGeoCountry,setGeoCountryCode,setGeoCity } = useCountryStore();
+  const {geo_city,geo_country} = useCountryStore();
+  const {flag_geolocation, no_flag_geolocation} = useFlagStore();
 
-  const { width } = useWindowSize();
+   const { width } = useWindowSize();
   const showAside = width >= 701; // Afficher l'aside si la largeur est >=
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY_OPENWEATHER;
+  // const apiKey = process.env.NEXT_PUBLIC_API_KEY_OPENWEATHER;
 
   useEffect(() => {
     const browserLanguage = window.navigator.language.slice(0, 2);
@@ -53,21 +44,23 @@ export default function Home() {
       },
       async (error) => {
         const errorMessage =
-          "La géolocalisation est désactivée dans votre navigateur. Nous utiliserons votre adresse IP pour estimer votre position et vous fournir une prévision météo.";
+          browserLanguage == "fr"
+            ? "La géolocalisation est désactivée dans votre navigateur. Nous utiliserons votre adresse IP pour estimer votre position et vous fournir une prévision météo."
+            : "Geolocation is disabled in your browser. We will use your IP address to estimate your location and provide you with a weather forecast.";
         setError(errorMessage);
         setIsGeolocationEnabled(false); // Géolocalisation navigateur non autorisé
 
         try {
           const response = await fetch("https://api.ipify.org?format=json");
           const data = await response.json();
-          // const ipAddress = data.ip;
 
           const locationIP = await fetch(`http://ip-api.com/json/${data.ip}`);
           const locationIpResponseJson = await locationIP.json();
 
-          setGeoCity(locationIpResponseJson.city);
-          setGeoCountry(locationIpResponseJson.country);
-          setGeoCountryCode(locationIpResponseJson.countryCode.toUpperCase());
+          setCoordinates(
+            locationIpResponseJson.lat,
+            locationIpResponseJson.lon
+          );
         } catch (ipError) {
           console.error(
             "Erreur lors de la récupération de l'adresse IP :",
@@ -82,94 +75,73 @@ export default function Home() {
 
     setlanguageBrowser(browserLanguage == "fr" ? browserLanguage : "en");
 
-    const fechtCountryWithLatitudeAndLongitude = async (
-      latitude: number,
-      longitude: number,
-      language: string
-    ) => {
-      try {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=${language}`
-        );
+    // const fechtWeatherWithLatitudeAndLongitude = async (
+    //   latitude: number,
+    //   longitude: number,
+    //   language: string
+    // ) => {
+    //   try {
+    //     const response = await fetch(
+    //       `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=${language}`
+    //     );
 
-        if (!response.ok) {
-          throw new Error(
-            "Erreur lors de la récupération des données de la ville."
-          );
-        }
+    //     if (!response.ok) {
+    //       throw new Error(
+    //         "Erreur lors de la récupération des données de la ville."
+    //       );
+    //     }
 
-        const data = await response.json();
-        console.log(data);
+    //     const data = await response.json();
+    //     console.log(data);
 
-        // const responseWeatherData = {
-        //   temperature: ,
-        //   icon:,
-        //   temp_real: ,
-        //   temp_feel: ,
-        //   rain: ,
-        //   wind: ,
-        //   humidity: ,
-        // }
+    //     // const responseWeatherData = {
+    //     //   temperature: ,
+    //     //   icon:,
+    //     //   temp_real: ,
+    //     //   temp_feel: ,
+    //     //   rain: ,
+    //     //   wind: ,
+    //     //   humidity: ,
+    //     // }
 
-        // Extraire le nom de la ville de la réponse de l'API
-        // const cityName = data[0]?.name || "Ville inconnue"; // Gérer le cas où la ville n'est pas trouvée
-        // const country_code = data[0]?.country || "code inconnu";
-        //  setCity(cityName);
-        //  setCountry_code(country_code);
-        //  return;
-      } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des données de la ville :",
-          error
-        );
-        throw error; // Propager l'erreur pour la gestion dans useEffect
-      }
-    };
+    //     // Extraire le nom de la ville de la réponse de l'API
+    //     // const cityName = data[0]?.name || "Ville inconnue"; // Gérer le cas où la ville n'est pas trouvée
+    //     // const country_code = data[0]?.country || "code inconnu";
+    //     //  setCity(cityName);
+    //     //  setCountry_code(country_code);
+    //     //  return;
+    //   } catch (error) {
+    //     console.error(
+    //       "Erreur lors de la récupération des données de la ville :",
+    //       error
+    //     );
+    //     throw error; // Propager l'erreur pour la gestion dans useEffect
+    //   }
+    // };
 
-    if (latitude !== null && longitude !== null && language_browser && apiKey) {
-      fechtCountryWithLatitudeAndLongitude(
-        latitude,
-        longitude,
-        language_browser
-      );
+    if (latitude !== null && longitude !== null && language_browser) {
+      weatherWithLatitudeAndLongitude(latitude, longitude, language_browser);
     }
+
+  
   }, [
     setCoordinates,
     setlanguageBrowser,
-    setGeoCity,
-    setGeoCountry,
-    setGeoCountryCode,
     setIsGeolocationEnabled,
     language_browser,
     latitude,
     longitude,
-    apiKey,
   ]);
 
-  ////////////
-  useEffect(() => {
-    // Logique du drapeau ici
-    const testCodesFlags: boolean =
-      CodeFlags.codes_flags.includes(geo_country_code);
-    if (testCodesFlags) {
-      setFlagGeolocalisation(
-        `https://countryflagsapi.netlify.app/flag/${geo_country_code}.svg`
-      );
-    } else {
-      setNoFlagGeolocalisation(Flag);
-    }
-  }, [geo_country_code, setFlagGeolocalisation, setNoFlagGeolocalisation]); // Dépend uniquement de country_code
+    useEffect(() => {
+console.log(geo_country);
+console.log(geo_city);
+console.log(flag_geolocation);
+console.log(no_flag_geolocation);  
+console.log(locationWeather);  
+   }, [geo_country,geo_city,flag_geolocation,no_flag_geolocation,locationWeather ]); 
 
-  ////////////
-  ///////////////
-  useEffect(() => {
-    console.log(language_browser);
-    console.log(geo_country);
-    console.log(city);
-    console.log(geo_country_code);
-    console.log(flag_geolocalisation);
-  });
-  //////////////
+  
 
   return (
     <>
