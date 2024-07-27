@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-interface localisationWeatherData {
-  temperature: number;
+interface locationWeatherData {
+  description: string;
   icon: string;
   temp_real: number | null;
   temp_feel: number | null;
@@ -14,25 +14,22 @@ interface GeolocationState {
   latitude: number | null;
   longitude: number | null;  
   isGeolocationEnabled: boolean;
-  city: string | null;
-  localisationWeather: localisationWeatherData | null;
+  locationWeather: locationWeatherData | null;
   setCoordinates: (latitude: number, longitude: number) => void;  
   setIsGeolocationEnabled: (isGeolocationEnabled: boolean) => void; 
-  setCity: (city: string) => void;
+  setLocationWeather: (data: locationWeatherData) => void;
 }
 
 const useGeolocationStore = create<GeolocationState>((set) => ({
-  localisationWeather: null,
+  locationWeather: null,
   latitude: null,
   longitude: null,  
   isGeolocationEnabled: true, 
-  city: null,  
   setCoordinates: (latitude, longitude) => set({ latitude, longitude }),  
   setIsGeolocationEnabled: (isGeolocationEnabled) =>
     set({ isGeolocationEnabled }), 
-  setCity: (city) => set({ city }),
-  setlocalisationWeather: (data: localisationWeatherData) =>
-    set({ localisationWeather: data }),
+  setLocationWeather: (data: locationWeatherData) =>
+    set({ locationWeather: data }),
 }));
 
 export default useGeolocationStore;
