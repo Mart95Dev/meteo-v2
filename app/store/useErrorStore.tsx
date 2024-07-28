@@ -6,7 +6,7 @@ interface ErrorState {
 }
 
 const useErrorStore = create<ErrorState>((set)=>({
-    error: "",
+    error: "nothing",
     setError: (error)=> set({error})
 }))
 
