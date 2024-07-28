@@ -15,15 +15,15 @@ interface FlagState {
 const useFlagStore = create<FlagState>((set) => ({
   flag_geolocation: "",
   no_flag_geolocation: false,
-  setFlagGeolocation: (flag_geolocation: string) =>
+  setFlagGeolocation: (flag_geolocation) =>
     set({ flag_geolocation }),
-  setNoFlagGeolocation: (no_flag_geolocation: boolean) => set({no_flag_geolocation}),
+  setNoFlagGeolocation: (no_flag_geolocation) => set({no_flag_geolocation}),
   flag_search: "",
   no_flag_search: false,
 
-  setFlagSearch: (flag_search: string) => set({ flag_search }),
+  setFlagSearch: (flag_search) => set({ flag_search }),
 
-  setNoFlagSearch: (no_flag_search: boolean) => set({no_flag_search}),
+  setNoFlagSearch: (no_flag_search) => set({no_flag_search}),
 
 }));
 
