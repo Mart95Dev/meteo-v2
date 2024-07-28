@@ -58,9 +58,8 @@ export const weatherWithLatitudeAndLongitude = async (
 
     const closestWeatherData = closestForecast.data;
 
-    const rainText = language == "fr" ? "Aucune pluie" : "No rain forecast.";
     const rainData = closestWeatherData.rain?.["1h"];
-    const rainValue = rainData !== undefined ? rainData : rainText;
+    const rainValue = rainData !== undefined ? `${rainData} mm` : "0 mm";
 
     const responseWeatherData = {
       description: closestWeatherData.weather[0].description,
