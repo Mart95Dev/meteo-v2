@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect} from "react";
-import { useWindowSize } from "./hook/useWindowSize";
+import { useEffect } from "react";
 import useGeolocationStore from "./store/useGeolocationStore";
 import useFlagStore from "./store/useFlagStore";
 import useCountryStore from "./store/useCountryStore";
 import useLanguageBrowserStore from "./store/useLanguageBrowser";
-import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
 import useErrorStore from "./store/useErrorStore";
+import { useWindowSize } from "./hook/useWindowSize";
+
+import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
 
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
-import BoxSearchClimatCountryInformation from "./components/BoxSearchClimatCountryInformation/BoxSearchClimatCountryInformation";
-import BoxClimatCountryInformation from "./reusable/BoxClimatCountryInformation/BoxClimatCountryInformation";
+import InputSearchCountry from "./components/SearchLocation/InputSearchCountry";
+import GeolocationClimatCountryWeather from "./components/Geolocation/GeolocationClimatCountryWeather";
+import SearchClimatCountryWeather from "./components/SearchLocation/SearchClimatCountryWeather";
 import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
 import { TbMapSearch } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
@@ -21,7 +23,7 @@ import Aside from "./Layout/Aside/Aside";
 export default function Home() {
   //state
 
-  const { setError } = useErrorStore();
+  const { error, setError } = useErrorStore();
   const {
     latitude,
     longitude,
@@ -37,7 +39,7 @@ export default function Home() {
 
   const { width } = useWindowSize();
   const showAside = width >= 701; // Afficher l'aside si la largeur est >=
- 
+
   useEffect(() => {
     const browserLanguage = window.navigator.language.slice(0, 2);
 
@@ -69,9 +71,11 @@ export default function Home() {
             "Erreur lors de la récupération de l'adresse IP :",
             ipError
           );
-          setError(
-            "Impossible de récupérer les données de localisation par votre Ip ou la localisation via votre naviagateur."
-          );
+          const errorMessage =
+            browserLanguage == "fr"
+              ? "Impossible de récupérer les données de localisation par votre Ip ou la localisation via votre naviagateur."
+              : "Unable to retrieve location data from your IP or location via your browser.";
+          setError(errorMessage);
         }
       }
     );
@@ -97,9 +101,11 @@ export default function Home() {
     console.log(flag_geolocation);
     console.log(no_flag_geolocation);
     console.log(locationWeather);
+    console.log(error);
   }, [
     geo_country,
     geo_city,
+    error,
     flag_geolocation,
     no_flag_geolocation,
     locationWeather,
@@ -115,17 +121,15 @@ export default function Home() {
           </span>
           Météo de votre géolocalisation actuelle :
         </CategoryTitle>
-        <BoxClimatCountryInformation />
+        <GeolocationClimatCountryWeather />
         <CategoryTitle level={2}>
           <span>
             <TbMapSearch className="icon-search-localisation" />
           </span>
           Rechercher la météo de la ville ou du pays :
         </CategoryTitle>
-        <BoxSearchClimatCountryInformation />
-        <BoxClimatCountryInformation />
-        <BoxClimatCountryInformation />
-        <BoxClimatCountryInformation />
+        <InputSearchCountry />
+        <SearchClimatCountryWeather/>
       </main>
       {showAside && <Aside />}
       <Footer />
