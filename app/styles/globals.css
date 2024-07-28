@@ -34,7 +34,7 @@
 /* //////////////////////////////////// */
 
 body {
-  padding: 10px;
+  padding: 0.6rem;
   font-family: var(--font-default);
   font-weight: var(--font-weight-regular);
   min-width: 360px;
@@ -74,6 +74,7 @@ body {
 
   .history-box {
     grid-row: 1;
+    /* padding-top: 0.6rem; */
     background-color: var(--color-background-box);
     min-height: 558px;
     width: 100%;
@@ -125,6 +126,7 @@ body {
 
 header {
   grid-area: header;
+  /* padding-top: 0.6rem; */
   height: 175px;
 }
 
@@ -323,15 +325,17 @@ input[type="search"]::placeholder {
   align-items: center;
   justify-content: center;
   width: 64px;
-  height: 64px;
+  height: 35px;
   background-color: var(--color-primary);  
   color: var(--color-background-box);
   font-family: var(--font-poppins);
   font-weight: var(--font-weight-semibold);
-  font-size: 1rem;
+  font-size: 1.5rem;
  }
 
- 
+ .flag-border, .not-found-flag{
+  border: 0.5px solid black;
+ }
   
  
  
