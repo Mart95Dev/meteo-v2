@@ -37,7 +37,7 @@ body {
   padding: 0.6rem;
   font-family: var(--font-default);
   font-weight: var(--font-weight-regular);
-  min-width: 360px;
+  min-width: 380px;
   min-height: 100vh;
   background: linear-gradient(
     180deg,
