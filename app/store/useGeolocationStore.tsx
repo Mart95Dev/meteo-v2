@@ -28,7 +28,7 @@ const useGeolocationStore = create<GeolocationState>((set) => ({
   setCoordinates: (latitude, longitude) => set({ latitude, longitude }),  
   setIsGeolocationEnabled: (isGeolocationEnabled) =>
     set({ isGeolocationEnabled }), 
-  setLocationWeather: (data: locationWeatherData) =>
+  setLocationWeather: (data) =>
     set({ locationWeather: data }),
 }));
 
