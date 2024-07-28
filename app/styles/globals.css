@@ -19,17 +19,33 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  
 }
 
 /* /// -fonts- ////////////////////*/
-.poppins-regular { font-family: var(--font-poppins); font-weight: var(--font-weight-regular); }
-.poppins-medium { font-family: var(--font-poppins); font-weight: var(--font-weight-medium); }
-.poppins-semibold { font-family: var(--font-poppins); font-weight: var(--font-weight-semibold); }
-.lato-light { font-family: var(--font-lato); font-weight: 300; } /* Lato Light n'a pas de variable */
-.lato-regular { font-family: var(--font-lato); font-weight: var(--font-weight-regular); }
-.lato-bold { font-family: var(--font-lato); font-weight: var(--font-weight-bold); }
-
+.poppins-regular {
+  font-family: var(--font-poppins);
+  font-weight: var(--font-weight-regular);
+}
+.poppins-medium {
+  font-family: var(--font-poppins);
+  font-weight: var(--font-weight-medium);
+}
+.poppins-semibold {
+  font-family: var(--font-poppins);
+  font-weight: var(--font-weight-semibold);
+}
+.lato-light {
+  font-family: var(--font-lato);
+  font-weight: 300;
+} /* Lato Light n'a pas de variable */
+.lato-regular {
+  font-family: var(--font-lato);
+  font-weight: var(--font-weight-regular);
+}
+.lato-bold {
+  font-family: var(--font-lato);
+  font-weight: var(--font-weight-bold);
+}
 
 /* //////////////////////////////////// */
 
@@ -37,7 +53,7 @@ body {
   padding: 0.6rem;
   font-family: var(--font-default);
   font-weight: var(--font-weight-regular);
-  min-width: 380px;
+  min-width: 385px;
   min-height: 100vh;
   background: linear-gradient(
     180deg,
@@ -104,13 +120,13 @@ body {
     font-weight: bold;
   }
 
-  .data-row{
+  .data-row {
     font-size: 0.75rem;
   }
 
   .title-history {
     padding-top: 10px;
-   text-align: center;
+    text-align: center;
     margin: auto;
     text-decoration: underline;
     font-size: 0.9rem;
@@ -229,12 +245,13 @@ footer {
 
 .country-flag,
 .weather-icon {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .country-flag {
   grid-area: country-flag;
   grid-column: 1 / 3;
+  margin: auto;
 }
 .country-name {
   grid-area: country-name;
@@ -254,10 +271,12 @@ footer {
 }
 .weather-icon {
   grid-area: weather-icon;
+  background: none;
   grid-column: 1 / 3;
-  display: flex;
-  align-items: center;
-  transform: translateY(-10%);
+  margin: auto;
+  /* display: flex;
+  align-items: center; */
+  /* transform: translateY(15%); */
 }
 .temperature-label {
   grid-area: temperature-label;
@@ -267,19 +286,24 @@ footer {
 }
 .rain {
   grid-area: rain;
+  grid-column: 5/7;
 }
 .wind {
   grid-area: wind;
+  grid-column: 5/7;
 }
 .real-feel {
   grid-area: real-feel;
+  grid-column: 3/5;
 }
 
 .feels-like {
   grid-area: feels-like;
+  grid-column: 3/5;
 }
 .humidity {
   grid-area: humidity;
+  grid-column: 5/7;
 }
 
 .icon-search-localisation {
@@ -287,6 +311,14 @@ footer {
   width: 35px;
   color: var(--color-background-box);
 }
+
+.weather-data {
+  font-weight: bold;
+  margin-left: 10px;
+  border: 1px solid var(--color-style);
+  padding: 3px;
+}
+
 
 /* //////////////////////////////////////// */
 
@@ -320,22 +352,20 @@ input[type="search"]::placeholder {
 }
 
 /* ///////////////////////////////////////// */
- .not-found-flag{
+.not-found-flag {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 64px;
   height: 35px;
-  background-color: var(--color-primary);  
+  background-color: var(--color-primary);
   color: var(--color-background-box);
   font-family: var(--font-poppins);
   font-weight: var(--font-weight-semibold);
   font-size: 1.5rem;
- }
+}
 
- .flag-border, .not-found-flag{
+.flag-border,
+.not-found-flag {
   border: 0.5px solid black;
- }
-  
- 
- 
+}
