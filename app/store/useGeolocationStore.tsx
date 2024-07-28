@@ -5,7 +5,7 @@ interface locationWeatherData {
   icon: string;
   temp_real: number | null;
   temp_feel: number | null;
-  rain: number | null;
+  rain: number | string;
   wind: number | null;
   humidity: number | null;
 }
