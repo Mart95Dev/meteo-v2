@@ -1,11 +1,11 @@
-import BoxImageGeolocation from "@/app/components/BoxImageGeolocation/BoxImageGeolocation";
+import HeaderImageLocation from "@/app/components/Geolocation/HeaderImageGeolocation";
 import imageTest from "../../../public/images/paris.webp"
 
 
 export default function Header() {
   return (
     <header  >
-      <BoxImageGeolocation itemImage={imageTest}/>
+      <HeaderImageLocation itemImage={imageTest}/>
     </header>
   );
 }
