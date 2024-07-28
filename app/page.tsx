@@ -34,8 +34,8 @@ export default function Home() {
 
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
 
-  const { geo_city, geo_country } = useCountryStore();
-  const { flag_geolocation, no_flag_geolocation } = useFlagStore();
+  // const { geo_city, geo_country } = useCountryStore();
+  // const { flag_geolocation, no_flag_geolocation } = useFlagStore();
 
   const { width } = useWindowSize();
   const showAside = width >= 701; // Afficher l'aside si la largeur est >=
@@ -95,21 +95,21 @@ export default function Home() {
     longitude,
   ]);
 
-  useEffect(() => {
-    console.log(geo_country);
-    console.log(geo_city);
-    console.log(flag_geolocation);
-    console.log(no_flag_geolocation);
-    console.log(locationWeather);
-    console.log(error);
-  }, [
-    geo_country,
-    geo_city,
-    error,
-    flag_geolocation,
-    no_flag_geolocation,
-    locationWeather,
-  ]);
+  // useEffect(() => {
+  //   console.log(geo_country);
+  //   console.log(geo_city);
+  //   console.log(flag_geolocation);
+  //   console.log(no_flag_geolocation);
+  //   console.log(locationWeather);
+  //   console.log(error);
+  // }, [
+  //   geo_country,
+  //   geo_city,
+  //   error,
+  //   flag_geolocation,
+  //   no_flag_geolocation,
+  //   locationWeather,
+  // ]);
 
   return (
     <>
