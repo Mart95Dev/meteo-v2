@@ -22,12 +22,12 @@ const useCountryStore = create<countryState>((set)=>({
     search_country: "",
     search_country_code: "",
     search_city: "",
-    setGeoCountry: (geo_country: string) => set({geo_country}),
-    setGeoCountryCode: (geo_country_code: string) => set({geo_country_code}),
-    setGeoCity: (geo_city: string) => set({geo_city}),
-    setSearchCountry: (search_country: string) => set({search_country}),
-    setSearchCountryCode: (search_country_code: string) => set({search_country_code}),
-    setSearchCity: (search_city: string) => set({search_city}),
+    setGeoCountry: (geo_country) => set({geo_country}),
+    setGeoCountryCode: (geo_country_code) => set({geo_country_code}),
+    setGeoCity: (geo_city) => set({geo_city}),
+    setSearchCountry: (search_country) => set({search_country}),
+    setSearchCountryCode: (search_country_code) => set({search_country_code}),
+    setSearchCity: (search_city) => set({search_city}),
 }))
 
 export default useCountryStore;
