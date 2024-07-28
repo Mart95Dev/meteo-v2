@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 import useGeolocationStore from "./store/useGeolocationStore";
-import useFlagStore from "./store/useFlagStore";
-import useCountryStore from "./store/useCountryStore";
 import useLanguageBrowserStore from "./store/useLanguageBrowser";
 import useErrorStore from "./store/useErrorStore";
 import { useWindowSize } from "./hook/useWindowSize";
@@ -19,23 +17,21 @@ import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
 import { TbMapSearch } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
 import Aside from "./Layout/Aside/Aside";
+import ModaleAlertIP from "./components/Modale/ModaleAlertIP";
 
 export default function Home() {
   //state
 
-  const { error, setError } = useErrorStore();
+  const { setError } = useErrorStore();
   const {
     latitude,
     longitude,
+    isGeolocationEnabled,
     setCoordinates,
     setIsGeolocationEnabled,
-    locationWeather,
   } = useGeolocationStore();
 
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
-
-  // const { geo_city, geo_country } = useCountryStore();
-  // const { flag_geolocation, no_flag_geolocation } = useFlagStore();
 
   const { width } = useWindowSize();
   const showAside = width >= 701; // Afficher l'aside si la largeur est >=
@@ -95,21 +91,6 @@ export default function Home() {
     longitude,
   ]);
 
-  // useEffect(() => {
-  //   console.log(geo_country);
-  //   console.log(geo_city);
-  //   console.log(flag_geolocation);
-  //   console.log(no_flag_geolocation);
-  //   console.log(locationWeather);
-  //   console.log(error);
-  // }, [
-  //   geo_country,
-  //   geo_city,
-  //   error,
-  //   flag_geolocation,
-  //   no_flag_geolocation,
-  //   locationWeather,
-  // ]);
 
   return (
     <>
@@ -121,7 +102,12 @@ export default function Home() {
           </span>
           Météo de votre géolocalisation actuelle :
         </CategoryTitle>
-        <GeolocationClimatCountryWeather />
+        {!isGeolocationEnabled ? (
+          <ModaleAlertIP />
+        ) : (
+          <GeolocationClimatCountryWeather />
+        )}
+
         <CategoryTitle level={2}>
           <span>
             <TbMapSearch className="icon-search-localisation" />
@@ -129,7 +115,7 @@ export default function Home() {
           Rechercher la météo de la ville ou du pays :
         </CategoryTitle>
         <InputSearchCountry />
-        <SearchClimatCountryWeather/>
+        {/* <SearchClimatCountryWeather/> */}
       </main>
       {showAside && <Aside />}
       <Footer />
