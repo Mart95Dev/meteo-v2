@@ -20,13 +20,7 @@ export default function FlagFound() {
 
   return (
     <div>
-      {isLoading ? <Image 
-        src="/images/icon_default.png"
-        alt="chargement en cours"
-        width={64}
-        height={35}
-        priority
-        /> :
+      {isLoading ? <p>Recherche en cours...</p>:
      <Image className='flag-border'
      src={useFlagStore.getState().flag_geolocation}
      alt={altFlagImage}
