@@ -1,11 +1,17 @@
 import HeaderImageLocation from "@/app/components/Geolocation/HeaderImageGeolocation";
-import imageTest from "../../../public/images/paris.webp"
+import useFetchHeaderGeolocationPhotoStore from "@/app/store/useFetchHeaderGeolocationPhoto";
+import { StaticImageData } from "next/image";
 
 
 export default function Header() {
+
+const {geo_photo} = useFetchHeaderGeolocationPhotoStore();
+
+
   return (
-    <header  >
-      <HeaderImageLocation itemImage={imageTest}/>
+    <header>
+      {geo_photo ? <HeaderImageLocation itemImage={geo_photo}/> : "Recherche en cours..."}
+    
     </header>
   );
 }
