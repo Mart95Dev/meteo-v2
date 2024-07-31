@@ -8,6 +8,10 @@ const nextConfig = {
             port: '',
             pathname: '/img/wn/**', // Le chemin d'accès aux icônes météo
           },
+          {  // Nouvelle entrée pour Pixabay
+            protocol: 'https',
+            hostname: 'pixabay.com',
+          },
         ],
       },  
 };
