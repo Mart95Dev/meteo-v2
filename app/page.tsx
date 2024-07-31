@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useGeolocationStore from "./store/useGeolocationStore";
 import useLanguageBrowserStore from "./store/useLanguageBrowser";
 import useErrorStore from "./store/useErrorStore";
 import { useWindowSize } from "./hook/useWindowSize";
 
 import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
+import { fetchHeaderGeolocationPhoto } from "./functions/fetchHeaderGeolocationPhoto";
 
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
@@ -18,10 +19,12 @@ import { TbMapSearch } from "react-icons/tb";
 import { IoLocation } from "react-icons/io5";
 import Aside from "./Layout/Aside/Aside";
 import ModaleAlertIP from "./components/Modale/ModaleAlertIP";
+import useCountryStore from "./store/useCountryStore";
 
 export default function Home() {
   //state
-
+  const geoCapitalRef = useRef<any>(null);
+  const selectedImageRef = useRef<any>(null);
   const { setError } = useErrorStore();
   const {
     latitude,
@@ -30,6 +33,8 @@ export default function Home() {
     setCoordinates,
     setIsGeolocationEnabled,
   } = useGeolocationStore();
+
+  const { geo_country, geo_capital, setGeoCapital } = useCountryStore();
 
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
 
@@ -81,16 +86,42 @@ export default function Home() {
     if (latitude !== null && longitude !== null && language_browser) {
       weatherWithLatitudeAndLongitude(latitude, longitude, language_browser);
     }
+
+    if (geo_capital !== "") {
+      fetchHeaderGeolocationPhoto().then((data) => {
+        if (data) {
+          console.log(data);
+          geoCapitalRef.current = data;
+          const imagesWithLargeUrl = geoCapitalRef.current.hits.filter(
+            (item) => item.largeImageURL
+          );
+
+          const randomIndex = Math.floor(
+            Math.random() * imagesWithLargeUrl.length
+          );
+          const selectedImage = imagesWithLargeUrl[randomIndex].largeImageURL;
+
+          selectedImageRef.current = selectedImage;
+        }
+      });
+    }
+
+    if (selectedImageRef.current !== null) {
+      setGeoCapital(selectedImageRef.current);
+      geoCapitalRef.current = null;
+      selectedImageRef.current = null;
+    }
   }, [
     setCoordinates,
     setlanguageBrowser,
     setIsGeolocationEnabled,
     setError,
+    geo_capital,
     language_browser,
     latitude,
     longitude,
+    geo_country,
   ]);
-
 
   return (
     <>
