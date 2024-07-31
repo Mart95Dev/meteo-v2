@@ -1,7 +1,9 @@
-import useCountryStore from "../store/useCountryStore";
-import useGeolocationStore from "../store/useGeolocationStore";
-import useFlagStore from "../store/useFlagStore";
-import codeCountiresFiltered from "../data/filtered_curiexplore-pays.json";
+
+import useCountryStore from "@/app/store/useCountryStore";
+import useGeolocationStore from "@/app/store/useGeolocationStore";
+import useFlagStore from "@/app/store/useFlagStore";
+import codeCountriesFiltered from "../data/filtered_curiexplore-pays.json"
+
 
 export const weatherWithLatitudeAndLongitude = async (
   latitude: number,
@@ -22,6 +24,8 @@ export const weatherWithLatitudeAndLongitude = async (
     }
 
     const data = await response.json();
+    // console.log(data);
+    
 
     //// weather with time
     interface WeatherData {
@@ -72,14 +76,18 @@ export const weatherWithLatitudeAndLongitude = async (
     };
 
     ///extraire les données country / flag
-    const country = codeCountiresFiltered.find(
+    const country = codeCountriesFiltered.find(
       (c) => c.iso2 === data.city.country
     );
     if (country) {
       const countryName = language === "fr" ? country.name_fr : country.name_en;
       const countryFlag = country.flag;
+      const countryCapital = country.capital;
       useCountryStore.getState().setGeoCountry(countryName);
-      useFlagStore.getState().setFlagGeolocation(countryFlag);
+      useCountryStore.getState().setGeoCapital(countryCapital)
+      useFlagStore.getState().setFlagGeolocation(countryFlag)
+      useCountryStore.getState().setGeoCountryCode(data.city.country);
+
     } else {
       useCountryStore
         .getState()
