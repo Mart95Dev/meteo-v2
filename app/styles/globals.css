@@ -198,7 +198,7 @@ footer {
   margin: 6px 0 6px 0;
 
   display: grid;
-  grid-template-columns: 15% 10% 25% 15% 25% 10%;
+  grid-template-columns: 15% 10% 25% 9% 25% 21%;
   grid-template-rows: repeat(8, 1fr);
   grid-template-areas:
     "country-flag . country-name . capital-name ."
@@ -267,6 +267,7 @@ footer {
   align-items: center;
   justify-content: center;
   height: 27px;
+  width: 95.1%;
   background-color: var(--color-input-background);
 }
 .weather-icon {
