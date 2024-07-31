@@ -20,11 +20,11 @@ import { IoLocation } from "react-icons/io5";
 import Aside from "./Layout/Aside/Aside";
 import ModaleAlertIP from "./components/Modale/ModaleAlertIP";
 import useCountryStore from "./store/useCountryStore";
+import useFetchHeaderGeolocationPhotoStore from "./store/useFetchHeaderGeolocationPhoto";
 
 export default function Home() {
   //state
-  const geoCapitalRef = useRef<any>(null);
-  const selectedImageRef = useRef<any>(null);
+  const geoPhotoCapitalRef = useRef<any>(null);
   const { setError } = useErrorStore();
   const {
     latitude,
@@ -35,6 +35,8 @@ export default function Home() {
   } = useGeolocationStore();
 
   const { geo_country, geo_capital, setGeoCapital } = useCountryStore();
+
+  const {geo_photo,setGeoPhoto} = useFetchHeaderGeolocationPhotoStore();
 
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
 
@@ -90,38 +92,44 @@ export default function Home() {
     if (geo_capital !== "") {
       fetchHeaderGeolocationPhoto().then((data) => {
         if (data) {
-          console.log(data);
-          geoCapitalRef.current = data;
-          const imagesWithLargeUrl = geoCapitalRef.current.hits.filter(
-            (item) => item.largeImageURL
+          geoPhotoCapitalRef.current = data;
+          const imagesWithLargeUrl = geoPhotoCapitalRef.current.hits.filter(
+            (item:any) => item.largeImageURL
           );
 
           const randomIndex = Math.floor(
             Math.random() * imagesWithLargeUrl.length
           );
           const selectedImage = imagesWithLargeUrl[randomIndex].largeImageURL;
+          setGeoPhoto(selectedImage)
+          geoPhotoCapitalRef.current = null;
 
-          selectedImageRef.current = selectedImage;
+          return;
         }
       });
     }
 
-    if (selectedImageRef.current !== null) {
-      setGeoCapital(selectedImageRef.current);
-      geoCapitalRef.current = null;
-      selectedImageRef.current = null;
-    }
+    
   }, [
     setCoordinates,
     setlanguageBrowser,
     setIsGeolocationEnabled,
     setError,
+    setGeoPhoto,
     geo_capital,
     language_browser,
     latitude,
     longitude,
     geo_country,
   ]);
+
+  useEffect(() => {
+    console.log(geo_capital);
+    console.log(geo_photo);
+    
+    
+  }, [geo_photo,geo_capital])
+  
 
   return (
     <>
