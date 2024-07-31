@@ -24,6 +24,9 @@ export default function GeolocationClimatCountryWeather() {
   
       const iconUrl = (typeof locationWeather?.icon === 'string') ? locationWeather.icon : '';
 
+      // const iconUrl = typeof locationWeather?.icon === "string" ? locationWeather.icon : "";
+
+
 useEffect(() => {
   if(locationWeather){
     return setIsLoading(false)
