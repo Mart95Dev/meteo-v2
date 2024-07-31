@@ -54,7 +54,7 @@ useEffect(() => {
         </div>
         <div className="weather-icon">
         {isLoading ? (
-          <p>Chargement...</p>
+          <p>Recherche en cours...</p>
         ) : ( // Afficher l'image si isLoading est false
           <Image 
             src={iconUrl}
