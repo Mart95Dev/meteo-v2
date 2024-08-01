@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface locationWeatherData {
+export interface locationWeatherData {
   description: string;
   icon: string;
   temp_real: number | null;
