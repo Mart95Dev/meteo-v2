@@ -123,15 +123,7 @@ export default function Home() {
     geo_country,
   ]);
 
-  useEffect(() => {
-    console.log(geo_capital);
-    console.log(geo_photo);
-    
-    
-  }, [geo_photo,geo_capital])
-  
-
-  return (
+   return (
     <>
       <Header />
       <main className="lato-regular">
