@@ -1,13 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface WeatherData {
-  id: number;
+export interface WeatherData {
   date: string;
-  temperature: number;
-  flag: string;
-  country: string | null;
-  city: string | null;
+  temperature: number;  
   icon: string;
   temp_real: number | null;
   temp_feel: number | null;
