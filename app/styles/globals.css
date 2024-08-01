@@ -69,7 +69,7 @@ body {
   grid-template-rows: auto 1fr auto;
 }
 
-@media (min-width: 701px) {
+@media (min-width: 700px) {
   body {
     grid-template-areas:
       "header aside"
@@ -145,6 +145,11 @@ header {
   /* padding-top: 0.6rem; */
   height: 175px;
 }
+@media (min-width: 700px) {
+  header{
+    height: 250px;
+  }
+}
 
 main {
   grid-area: main;
@@ -175,12 +180,13 @@ footer {
 .image-location-container {
   position: relative; /* Nécessaire pour que fill fonctionne correctement */
   width: 100%; /* Largeur initiale de l'image à 100% */
-  min-width: 360px;
-  height: 175px; /* Hauteur fixe de l'image */
+  min-width: 385px;
+  height: 100%; /* Hauteur fixe de l'image */
 }
 
 .image-location-container img {
   object-fit: cover;
+  object-position: center;
 }
 
 .image-location-container,
