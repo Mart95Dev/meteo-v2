@@ -3,7 +3,7 @@ import type { StaticImageData } from "next/image";
 import { useState } from "react";
 
 type itemImageProps = {
-  itemImage: StaticImageData;
+  itemImage: string | StaticImageData;
 };
 
 export default function HeaderImageGeolocation({ itemImage }: itemImageProps) {

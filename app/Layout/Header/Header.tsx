@@ -1,17 +1,35 @@
+import { useEffect, useState } from "react";
 import HeaderImageLocation from "@/app/components/Geolocation/HeaderImageGeolocation";
 import useFetchHeaderGeolocationPhotoStore from "@/app/store/useFetchHeaderGeolocationPhoto";
-import { StaticImageData } from "next/image";
-
+// import { StaticImageData } from "next/image";
 
 export default function Header() {
+  const [isLoading, setIsLoading] = useState(true);
+  const { geo_photo } = useFetchHeaderGeolocationPhotoStore();
 
-const {geo_photo} = useFetchHeaderGeolocationPhotoStore();
-
+ useEffect(() => {
+  if (geo_photo) {
+    setIsLoading(false);
+  }
+ }, [geo_photo])
+ 
 
   return (
     <header>
-      {geo_photo ? <HeaderImageLocation itemImage={geo_photo}/> : "Recherche en cours..."}
-    
+           {isLoading ? (
+        <p>Recherche de la photo...</p>
+      ) : (
+        <HeaderImageLocation itemImage={geo_photo} /> 
+      )}
+
     </header>
   );
 }
+
+//   return (
+//     <header>
+//       {geo_photo ? <HeaderImageLocation itemImage={geo_photo}/> : "Recherche en cours..."}
+
+//     </header>
+//   );
+// }
