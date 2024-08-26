@@ -1,5 +1,4 @@
 import useCountryStore from "@/app/store/useCountryStore";
-// import useGeolocationStore from "@/app/store/useGeolocationStore";
 import useGeolocationStore, {
   locationWeatherData,
 } from "@/app/store/useGeolocationStore"; // Importer l'interface
