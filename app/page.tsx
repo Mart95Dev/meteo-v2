@@ -11,16 +11,15 @@ import { fetchHeaderGeolocationPhoto } from "./functions/fetchHeaderGeolocationP
 
 import Footer from "./Layout/Footer/Footer";
 import Header from "./Layout/Header/Header";
-import InputSearchCountry from "./components/SearchLocation/InputSearchCountry";
+
 import GeolocationClimatCountryWeather from "./components/Geolocation/GeolocationClimatCountryWeather";
-import SearchClimatCountryWeather from "./components/SearchLocation/SearchClimatCountryWeather";
+
 import CategoryTitle from "./reusable/CategoryTitle/CategoryTitle";
-import { TbMapSearch } from "react-icons/tb";
-import { IoLocation } from "react-icons/io5";
-import Aside from "./Layout/Aside/Aside";
+
 import ModaleAlertIP from "./components/Modale/ModaleAlertIP";
 import useCountryStore from "./store/useCountryStore";
 import useFetchHeaderGeolocationPhotoStore from "./store/useFetchHeaderGeolocationPhoto";
+import Aside from "./Layout/Aside/Aside";
 
 export default function Home() {
   //state
@@ -34,9 +33,9 @@ export default function Home() {
     setIsGeolocationEnabled,
   } = useGeolocationStore();
 
-  const { geo_country, geo_capital, setGeoCapital } = useCountryStore();
+  const { geo_country, geo_capital} = useCountryStore();
 
-  const {geo_photo,setGeoPhoto} = useFetchHeaderGeolocationPhotoStore();
+  const { setGeoPhoto } = useFetchHeaderGeolocationPhotoStore();
 
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
 
@@ -94,22 +93,20 @@ export default function Home() {
         if (data) {
           geoPhotoCapitalRef.current = data;
           const imagesWithLargeUrl = geoPhotoCapitalRef.current.hits.filter(
-            (item:any) => item.largeImageURL
+            (item: any) => item.largeImageURL
           );
 
           const randomIndex = Math.floor(
             Math.random() * imagesWithLargeUrl.length
           );
           const selectedImage = imagesWithLargeUrl[randomIndex].largeImageURL;
-          setGeoPhoto(selectedImage)
+          setGeoPhoto(selectedImage);
           geoPhotoCapitalRef.current = null;
 
           return;
         }
       });
     }
-
-    
   }, [
     setCoordinates,
     setlanguageBrowser,
@@ -123,32 +120,23 @@ export default function Home() {
     geo_country,
   ]);
 
-   return (
+  
+  return (
     <>
       <Header />
       <main className="lato-regular">
-        <CategoryTitle level={1}>
-          <span>
-            <IoLocation className="icon-search-localisation" />
-          </span>
-          Météo de votre géolocalisation actuelle :
-        </CategoryTitle>
-        {!isGeolocationEnabled ? (
-          <ModaleAlertIP />
-        ) : (
-          <GeolocationClimatCountryWeather />
-        )}
-
-        <CategoryTitle level={2}>
-          <span>
-            <TbMapSearch className="icon-search-localisation" />
-          </span>
-          Rechercher la météo de la ville ou du pays :
-        </CategoryTitle>
-        <InputSearchCountry />
-        {/* <SearchClimatCountryWeather/> */}
+        <div className="container-weather">
+          <CategoryTitle level={2}>
+            <span>Météo de votre géolocalisation actuelle :</span>
+          </CategoryTitle>
+          {!isGeolocationEnabled ? (
+            <ModaleAlertIP />
+          ) : (
+            <GeolocationClimatCountryWeather />
+          )}
+        </div>
       </main>
-      {showAside && <Aside />}
+      {showAside ? <Aside/> : ""}
       <Footer />
     </>
   );
