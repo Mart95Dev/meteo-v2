@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
-import { useState } from "react";
 
 type itemImageProps = {
   itemImage: string | StaticImageData;

@@ -6,10 +6,14 @@ export const fetchHeaderGeolocationPhoto =  async () => {
     
     try {
       const response = await fetch(`https://pixabay.com/api/?key=${apiKeyPixabay}&q=${useCountryStore.getState().geo_capital}&image_type=photo&per_page=5&pretty=true`);
+      
+      
       if (!response.ok) {
         throw new Error(`Erreur: ${response.status}`);
       }
       const data = await response.json();
+      console.log(data);
+      
       return  data
       
     } catch (error) {
