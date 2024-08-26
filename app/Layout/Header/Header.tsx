@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import HeaderImageLocation from "@/app/components/Geolocation/HeaderImageGeolocation";
 import useFetchHeaderGeolocationPhotoStore from "@/app/store/useFetchHeaderGeolocationPhoto";
-// import { StaticImageData } from "next/image";
 
 export default function Header() {
   const [isLoading, setIsLoading] = useState(true);
