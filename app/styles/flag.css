@@ -1,0 +1,17 @@
+/* ///////////////////////////////////////// */
+.not-found-flag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 35px;
+    background-color: var(--color-primary);
+    color: var(--color-background-box);
+    font-family: var(--font-poppins);
+    font-weight: var(--font-weight-semibold);
+  }
+  
+  .flag-border,
+  .not-found-flag {
+    border: 0.5px solid black;
+  }

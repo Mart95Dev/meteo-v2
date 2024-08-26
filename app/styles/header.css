@@ -1,0 +1,14 @@
+
+
+  .image-location-container {
+    position: relative; /* Nécessaire pour que fill fonctionne correctement */
+    width: 100%; /* Largeur initiale de l'image à 100% */
+    height: 100%; /* Hauteur fixe de l'image */
+  }
+  
+  .image-location-container img {
+    object-fit: cover;
+    object-position: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }

@@ -1,0 +1,22 @@
+/* //Modale alert/////////// */
+.modale-alert {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  .message-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+    padding: 25px;
+    flex: 1;
+  }
+  
+  .button-alert {
+    width: 25%;
+    padding: 10px;
+    margin: auto;
+    border-radius: 5px;
+  }
+  

@@ -1,0 +1,14 @@
+:root {
+    --color-primary: #87ceeb;
+    --color-background-box: #fffbfb;
+    --color-style: #90ee90;
+    --color-input-background: #f2f2f2;
+    --font-poppins: "Poppins", sans-serif;
+    --font-lato: "Lato", sans-serif;
+    --font-default: var(--font-lato);
+  
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+  }
