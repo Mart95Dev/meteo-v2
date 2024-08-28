@@ -1,11 +1,10 @@
 @import url("variables.css");
 @import url("fonts.css");
-@import url("header.css");
-@import url("footer.css");
-@import url("flag.css");
-@import url("box-climat-information.css");
 @import url("modale.css");
-
+@import url("flag.css");
+@import url("title.css");
+@import url("geolocation-image.css");
+@import url("box-climat-information.css");
 
 
 * {
@@ -15,47 +14,26 @@
 }
 
 body {
-  padding: 0.6rem;
   font-family: var(--font-default);
   font-weight: var(--font-weight-regular);
-  font-size: clamp(0.75rem, 2vw, 1rem);
-  height: 100vh;
-  overflow-y: hidden;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+  min-width: 360px;
+  min-height: 100vh; 
   background: linear-gradient(
     180deg,
     rgba(0, 212, 255, 1) 60%,
     rgba(255, 251, 251, 1) 100%
   );
+  background-size: 100% 100%;
+  background-repeat: no-repeat; 
   display: grid;
   grid-template-areas:
     "header"
     "main"
     "footer";
-  grid-template-rows: auto 1fr auto;
-}
-
-header {
-  grid-area: header;
-  min-height: 250px;
-}
-@media (min-width: 700px) {
-  header {
-    height: 300px;
-  }
-}
- main {
-   grid-area: main;
-   flex: 1;
- 
- }
-
- footer {
-  grid-area: footer;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  height: 10px;
-   background-color:transparent;
+  /* grid-template-rows: auto 1fr auto; */
+    grid-template-rows: auto minmax(0, 1fr) auto; 
+  
 }
 
 @media (min-width: 700px) {
@@ -66,35 +44,61 @@ header {
       "footer footer";
     grid-template-columns: 2fr 1fr;
     column-gap: 20px;
-  } 
+  }
 
+  /* ////ASIDE */
   aside {
     grid-area: aside;
     display: grid;
     grid-template-rows: auto 1fr;
   }
- 
+  /* //////////// */
 }
 
- 
- h1, h2 {
-    font-size: clamp(1rem, 2vw, 1.3rem);
-  }
+header {
+  padding: 0.6rem 0.6rem 0rem 0.6rem;
+  grid-area: header;
+  min-height: 235px;
+}
 
+@media (min-width: 700px) {
+  header {
+    height: 263px; /* Ou ajustez selon vos besoins */
+  }
+}
+
+main {
+  grid-area: main;
+  flex: 1;
+  /* overflow-y: auto;  */
+  padding: 0 0.6rem 0.6rem 0.6rem;
+}
+
+aside {
+  grid-area: aside;
+}
+
+footer {
+  grid-area: footer;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 30px; /* Assurer une hauteur minimale au footer */
+  background-color: transparent;
+  font-size: 0.6rem;
+  flex-wrap: wrap;
+}
 
 .container-weather {
   background-color: var(--color-background-box);
 }
 
-.category-title {
-  display: flex;
-  align-items: center;
-  color: black;
-  height: 4rem;
-  border-bottom: 1px solid lightgray;
-}
-
 .image-location-container,
-.weather-box{
+.weather-box {
   width: 100%;
 }
+
+
+
+
