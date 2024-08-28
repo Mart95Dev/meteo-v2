@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 export default function GeolocationClimatCountryWeather() {
   const [isLoading, setIsLoading] = useState(true);
   const { geo_city, geo_country } = useCountryStore();
+  const {isGeolocationEnabled } = useGeolocationStore();
   const { locationWeather } = useGeolocationStore();
   const { language_browser } = useLanguageBrowserStore();
 
@@ -39,7 +40,7 @@ export default function GeolocationClimatCountryWeather() {
   }, [locationWeather]);
 
   return (
-    <div className="weather-box">
+    <div className={isGeolocationEnabled ? "weather-box" : "weather-box-disabled"}>
       <div className="country-flag poppins-regular ">
         <FlagDisplay />
       </div>
