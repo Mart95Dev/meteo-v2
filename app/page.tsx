@@ -9,6 +9,7 @@ import { useWindowSize } from "./hook/useWindowSize";
 
 import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
 import { fetchHeaderGeolocationPhoto } from "./functions/fetchHeaderGeolocationPhoto";
+import { handleGeolocationPermissionChange } from "./functions/handleGeolocationPermissionChange";
 
 import Header from "./Layout/Header/Header";
 import Footer from "./Layout/Footer/Footer";
@@ -89,7 +90,12 @@ export default function Home() {
       }
     );
 
-    setlanguageBrowser(browserLanguage == "fr" ? browserLanguage : "en");
+    setlanguageBrowser(browserLanguage === "fr" ? browserLanguage : "en");
+
+  // Appeler la fonction pour initialiser l'écouteur d'événements au montage du composant
+  handleGeolocationPermissionChange(); 
+
+
   }, [setCoordinates, setlanguageBrowser, setError, setIsGeolocationEnabled]);
 
 /// useEffect logique récupération donnée météo
