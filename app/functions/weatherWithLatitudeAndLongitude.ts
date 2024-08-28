@@ -24,7 +24,6 @@ export const weatherWithLatitudeAndLongitude = async (
     }
 
     const data = await response.json();
-    // console.log(data);
     
 
     //// weather with time
