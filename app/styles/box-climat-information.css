@@ -1,7 +1,7 @@
 /* ////Box Climat Country Information////// */
 
-.weather-box {
-  z-index: 5;
+.weather-box { 
+  display: block;
   min-height: 260px;
   max-height: 290px;
   padding: 0px 0 10px 0;
@@ -17,6 +17,10 @@
     "weather-icon . . . wind ."
     "weather-icon . feels-like . . ."
     "weather-icon . . . humidity .";
+}
+
+.weather-box-disabled{
+  display: none;
 }
 
 .weather-box,
