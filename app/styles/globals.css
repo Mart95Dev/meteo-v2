@@ -1,8 +1,8 @@
 @import url("variables.css");
 @import url("fonts.css");
-@import url("modale.css");
 @import url("flag.css");
 @import url("title.css");
+@import url("modale.css");
 @import url("geolocation-image.css");
 @import url("box-climat-information.css");
 
@@ -21,8 +21,8 @@ body {
   min-height: 100vh; 
   background: linear-gradient(
     180deg,
-    rgba(0, 212, 255, 1) 60%,
-    rgba(255, 251, 251, 1) 100%
+    rgba(var(--color-primary)) 60%,
+    rgba(var(--color-secondary))
   );
   background-size: 100% 100%;
   background-repeat: no-repeat; 

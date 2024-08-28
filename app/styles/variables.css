@@ -1,5 +1,6 @@
 :root {
-    --color-primary: #87ceeb;
+    --color-primary: 0, 212, 255, 1;
+    --color-secondary: 255, 251, 251, 1;
     --color-background-box: #fffbfb;
     --color-style: #90ee90;
     --color-input-background: #f2f2f2;

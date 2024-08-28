@@ -1,7 +1,10 @@
 .box-title {
   position: relative;
-  height: 1.8rem;
- 
+  height: 1.8rem; 
+}
+
+.box-title-disabled{
+  display: none;
 }
 
 .title {

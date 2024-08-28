@@ -1,22 +1,29 @@
 /* //Modale alert/////////// */
 .modale-alert {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-  }
-  .message-alert {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: justify;
-    padding: 25px;
-    flex: 1;
-  }
-  
-  .button-alert {
-    width: 25%;
-    padding: 10px;
-    margin: auto;
-    border-radius: 5px;
-  }
-  
+  display: block;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.modale-alert-disabled {
+  display: none;
+}
+
+.message-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: justify;
+  padding: 35px;
+  flex: 1;
+}
+
+.button-alert {
+  width: 20%;
+  min-width: 120px;
+  padding: 10px;
+  margin: auto;
+  border-radius: 5px;
+  background-color: rgba(var(--color-primary));
+}
