@@ -15,16 +15,26 @@ export default function Header() {
   }, [geo_photo]);
 
   return (
-    <header>
+   <header>
+    
       {!isGeolocationEnabled && (
-        <div className="image-location-container-alert">
+        <div className={`image-location-container-alert ${!isGeolocationEnabled ? 'fade-in' : ''}`}>
           <span className="alert-photo-header-text poppins-regular">
             Recherche de la photo en attente
           </span>
         </div>
       )}
 
-      {geo_photo && <HeaderImageLocation itemImage={geo_photo} />}
+      {/* Afficher l'image ou le message de chargement en fonction de isLoading et isGeolocationEnabled */}
+      {isGeolocationEnabled && (
+        <div className={`image-location-container ${isLoading ? 'fade-out' : 'fade-in'}`}>
+          {isLoading ? (
+            <p>Chargement de la photo...</p>
+          ) : geo_photo && (
+            <HeaderImageLocation itemImage={geo_photo} />
+          )}
+        </div>
+      )}
     </header>
   );
 }
