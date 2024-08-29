@@ -89,6 +89,7 @@ footer {
   flex: 0 0 auto;
   align-items: flex-end;
   justify-content: center;
+  padding-bottom: 5px;
   min-height: 30px; /* Assurer une hauteur minimale au footer */
   background-color: transparent;
   font-size: 0.6rem;
