@@ -11,11 +11,7 @@ export default function HeaderImageGeolocation({ itemImage }: itemImageProps) {
 
   return (
     <>
-      {!isGeolocationEnabled ? (
-        <div className="image-location-container-alert">
-          <span className="alert-photo-header-text poppins-regular">Recherche de la photo en attente</span>
-        </div>
-      ) : (
+      {isGeolocationEnabled && (
         <div className="image-location-container">
           <Image
             src={itemImage}
