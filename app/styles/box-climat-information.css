@@ -1,7 +1,6 @@
 /* ////Box Climat Country Information////// */
 
 .weather-box { 
-  display: block;
   min-height: 260px;
   max-height: 290px;
   padding: 0px 0 10px 0;
