@@ -20,7 +20,7 @@ export default function IconAnimation() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIconIndex((prevIndex) => (prevIndex + 1) % icons.length);
-    }, 1000);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [icons.length]);
