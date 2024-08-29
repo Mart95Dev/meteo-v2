@@ -1,0 +1,36 @@
+.icon-animation-container {
+    /* Styles de base du conteneur */
+    display: flex; /* Afficher par défaut */
+    align-items: center;
+    justify-content: center;
+    width: 100vw; 
+    height: 100vh; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
+  }
+  
+  .icon-animation-container-disabled { /* Masquer le conteneur lorsque les données sont chargées ou la modale est affichée */
+    display: none;
+  }
+  
+  .icon-animation-container svg {
+    /* Styles de l'icône */
+    font-size: 10rem; 
+    color: white;
+    animation: icon-fade 1s linear infinite; 
+  }
+  
+  @keyframes icon-fade {
+    0% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
