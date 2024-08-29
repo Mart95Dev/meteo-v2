@@ -156,17 +156,22 @@ export default function Home() {
       <div className="app-container">
         <Header />
         <main className="lato-regular">
-          {!isGeolocationEnabled && <ModaleAlertIP />}
-          <Suspense fallback={<SkeletonLoader />}> 
+      
+        {!isGeolocationEnabled && ( 
+          <ModaleAlertIP className={`modale-alert ${!isGeolocationEnabled ? 'fade-in' : 'fade-out'}`} />
+        )}
+        <Suspense fallback={<SkeletonLoader />}>
           {/* Encapsuler le contenu asynchrone dans Suspense */}
-          {isGeolocationEnabled && !isWeatherDataLoading && ( 
-            <div className="container-weather">
-              <Title level={2}>
-                <span>Météo de votre géolocalisation</span>
-              </Title>
-              <GeolocationClimatCountryWeather />
-            </div>
-          )}
+          <div className={`container-weather ${isGeolocationEnabled && !isWeatherDataLoading ? 'fade-in' : 'fade-out'}`}> {/* Transition pour la box météo */}
+            {isGeolocationEnabled && !isWeatherDataLoading && ( 
+              <>
+                <Title level={2}>
+                  <span>Météo de votre géolocalisation</span>
+                </Title>
+                <GeolocationClimatCountryWeather />
+              </>
+            )}
+          </div>
         </Suspense>
         </main>
         {showAside ? <Aside /> : ""}
