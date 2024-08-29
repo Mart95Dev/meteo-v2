@@ -11,23 +11,23 @@ export interface locationWeatherData {
 }
 
 interface GeolocationState {
+  isGeolocationEnabled: boolean;
   latitude: number | null;
   longitude: number | null;  
-  isGeolocationEnabled: boolean;
   locationWeather: locationWeatherData | null;
-  setCoordinates: (latitude: number, longitude: number) => void;  
   setIsGeolocationEnabled: (isGeolocationEnabled: boolean) => void; 
+  setCoordinates: (latitude: number, longitude: number) => void;  
   setLocationWeather: (data: locationWeatherData) => void;
 }
 
 const useGeolocationStore = create<GeolocationState>((set) => ({
+  isGeolocationEnabled: true, 
   locationWeather: null,
   latitude: null,
   longitude: null,  
-  isGeolocationEnabled: true, 
-  setCoordinates: (latitude, longitude) => set({ latitude, longitude }),  
   setIsGeolocationEnabled: (isGeolocationEnabled) =>
     set({ isGeolocationEnabled }), 
+  setCoordinates: (latitude, longitude) => set({ latitude, longitude }),  
   setLocationWeather: (data) =>
     set({ locationWeather: data }),
 }));
