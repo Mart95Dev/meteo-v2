@@ -40,7 +40,7 @@ export default function GeolocationClimatCountryWeather() {
   }, [locationWeather]);
 
   return (
-    <div className={isGeolocationEnabled ? "weather-box" : "weather-box-disabled"}>
+    <div className={!isGeolocationEnabled ? "weather-box-disabled" : "weather-box"}>
       <div className="country-flag poppins-regular ">
         <FlagDisplay />
       </div>
