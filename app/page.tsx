@@ -1,7 +1,7 @@
 "use client";
 
 // import { SpeedInsights } from "@vercel/speed-insights/next"
-import { useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import useGeolocationStore from "./store/useGeolocationStore";
 import useLanguageBrowserStore from "./store/useLanguageBrowser";
 import useErrorStore from "./store/useErrorStore";
@@ -16,6 +16,8 @@ import Footer from "./Layout/Footer/Footer";
 import Title from "./reusable/Title/Title";
 import ModaleAlertIP from "./components/Modale/ModaleAlertIP";
 import Aside from "./Layout/Aside/Aside";
+import SkeletonLoader from "./components/SkeletonLoader/SkeletonLoader";
+import IconAnimation from "./components/IconAnimation/IconAnimation";
 
 import GeolocationClimatCountryWeather from "./components/Geolocation/GeolocationClimatCountryWeather";
 
@@ -24,8 +26,12 @@ import useFetchHeaderGeolocationPhotoStore from "./store/useFetchHeaderGeolocati
 
 export default function Home() {
   //state
-  // Mémorisation de fetchHeaderGeolocationPhoto avec useMemo
-  const memoizedFetchHeaderGeolocationPhoto = useMemo(() => fetchHeaderGeolocationPhoto, []);
+  const [isWeatherDataLoading, setIsWeatherDataLoading] = useState(true); // Nouvel état
+  const [isLoading, setIsLoading] = useState(true);
+  const memoizedFetchHeaderGeolocationPhoto = useMemo(
+    () => fetchHeaderGeolocationPhoto,
+    []
+  );
 
   const geoPhotoCapitalRef = useRef<any>(null);
   const { setError } = useErrorStore();
@@ -37,7 +43,7 @@ export default function Home() {
     setIsGeolocationEnabled,
   } = useGeolocationStore();
 
-  const { geo_country, geo_capital } = useCountryStore();
+  const { geo_capital } = useCountryStore();
   const { setGeoPhoto } = useFetchHeaderGeolocationPhotoStore();
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
   const { width } = useWindowSize();
@@ -69,7 +75,6 @@ export default function Home() {
               `https://api.apibundle.io/ip-lookup?apikey=${ApiBundleKey}&ip=${dataIP.ip}`
             );
             const locationLongitudeLatitude = await locationIP.json();
-            
 
             setCoordinates(
               locationLongitudeLatitude.latitude,
@@ -92,60 +97,82 @@ export default function Home() {
 
     setlanguageBrowser(browserLanguage === "fr" ? browserLanguage : "en");
 
-  // Appeler la fonction pour initialiser l'écouteur d'événements au montage du composant
-  handleGeolocationPermissionChange(); 
-
-
+    // Appeler la fonction pour initialiser l'écouteur d'événements au montage du composant
+    handleGeolocationPermissionChange();
   }, [setCoordinates, setlanguageBrowser, setError, setIsGeolocationEnabled]);
 
-/// useEffect logique récupération donnée météo
+  /// useEffect logique récupération donnée météo
   useEffect(() => {
     if (latitude !== null && longitude !== null && language_browser) {
-      weatherWithLatitudeAndLongitude(latitude, longitude, language_browser);
+      setIsWeatherDataLoading(true);
+      weatherWithLatitudeAndLongitude(latitude, longitude, language_browser)
+        .then(() => {
+          setIsWeatherDataLoading(false);
+        })
+        .catch((error) => {
+          console.error("Impossible de récupérer les données météorologiques");
+          setIsWeatherDataLoading(false);
+        })
+        .finally(() => {
+          setIsLoading(false); // Arrêter le chargement initial après la récupération des données météo (succès ou erreur)
+        });
     }
   }, [latitude, longitude, language_browser]);
-  
-/// useEffect récupération photo
-useEffect(() => {  
-  if (geo_capital !== "") {
-    memoizedFetchHeaderGeolocationPhoto().then((data) => {
-      if (data) {
-        geoPhotoCapitalRef.current = data;
-        const imagesWithLargeUrl = geoPhotoCapitalRef.current.hits.filter(
-          (item: any) => item.largeImageURL
-        );
 
-        const randomIndex = Math.floor(
-          Math.random() * imagesWithLargeUrl.length
-        );
-        const selectedImage = imagesWithLargeUrl[randomIndex].largeImageURL;
-        setGeoPhoto(selectedImage);
-        geoPhotoCapitalRef.current = null;
+  /// useEffect récupération photo
+  useEffect(() => {
+    if (geo_capital !== "") {
+      memoizedFetchHeaderGeolocationPhoto().then((data) => {
+        if (data) {
+          geoPhotoCapitalRef.current = data;
+          const imagesWithLargeUrl = geoPhotoCapitalRef.current.hits.filter(
+            (item: any) => item.largeImageURL
+          );
 
-        return;
-      }
-    });
-  }   
+          const randomIndex = Math.floor(
+            Math.random() * imagesWithLargeUrl.length
+          );
+          const selectedImage = imagesWithLargeUrl[randomIndex].largeImageURL;
+          setGeoPhoto(selectedImage);
+          geoPhotoCapitalRef.current = null;
+
+          return;
+        }
+      });
+    }
   }, [geo_capital, setGeoPhoto, memoizedFetchHeaderGeolocationPhoto]);
 
   return (
     <>
-      <Header />
-      <main className="lato-regular">
-        <div className="container-weather">
-          <Title level={2}>
-            <span>Météo de votre géolocalisation</span>
-          </Title>
-          {!isGeolocationEnabled ? (
-            <ModaleAlertIP />
-          ) : (
-            <GeolocationClimatCountryWeather />
+      {/* Afficher IconAnimation au début du chargement initial */}
+      <div
+        className={`icon-animation-container ${
+          isLoading ? "" : "icon-animation-container-disabled"
+        }`}
+      >
+        <IconAnimation />
+      </div>
+
+      <div className="app-container">
+        <Header />
+        <main className="lato-regular">
+          {!isGeolocationEnabled && <ModaleAlertIP />}
+          <Suspense fallback={<SkeletonLoader />}> 
+          {/* Encapsuler le contenu asynchrone dans Suspense */}
+          {isGeolocationEnabled && !isWeatherDataLoading && ( 
+            <div className="container-weather">
+              <Title level={2}>
+                <span>Météo de votre géolocalisation</span>
+              </Title>
+              <GeolocationClimatCountryWeather />
+            </div>
           )}
-        </div>
-      </main>
-      {showAside ? <Aside /> : ""}
-      <Footer />
-      {/* <SpeedInsights/> */}
+        </Suspense>
+        </main>
+        {showAside ? <Aside /> : ""}
+        <Footer />
+        {/* <SpeedInsights/> */}
+      </div>
     </>
   );
 }
