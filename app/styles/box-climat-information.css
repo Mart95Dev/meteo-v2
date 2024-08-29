@@ -72,7 +72,7 @@
 .capital-name {
   grid-area: capital-name;
   grid-column: 5 / 7;
-  width: 87%;
+  max-width: 87%;
 }
 .weather-type {
   grid-area: weather-type;
@@ -80,7 +80,7 @@
   align-items: center;
   justify-content: center;
   height: 27px;
-  width: 95.1%;
+  max-width: 95.1%;
   background-color: var(--color-input-background);
 }
 .weather-icon {

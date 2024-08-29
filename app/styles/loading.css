@@ -8,12 +8,14 @@
     position: fixed; 
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.5); 
+    /* background-color: rgba(0, 0, 0, 0.5);  */
+    background-color: rgba(var(--color-primary));
     z-index: 1000; 
   }
   
   .icon-animation-container-disabled { /* Masquer le conteneur lorsque les données sont chargées ou la modale est affichée */
     display: none;
+  
   }
   
   .icon-animation-container svg {

@@ -69,14 +69,13 @@ header {
 
 @media (min-width: 700px) {
   header {
-    height: 263px; /* Ou ajustez selon vos besoins */
+    min-height: 263px; /* Ou ajustez selon vos besoins */
   }
 }
 
 main {
   grid-area: main;
-  flex: 1;
-  /* overflow-y: auto;  */
+  flex: 1 0 auto;
   padding: 0 0.6rem 0.6rem 0.6rem;
 }
 
@@ -105,6 +104,25 @@ footer {
   width: 100%;
 }
 
+/* Dans votre fichier CSS principal ou un fichier dédié */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s ease-in-out forwards; /* Apparition progressive en 0.5 seconde */
+}
 
+.fade-out {
+  opacity: 1;
+  animation: fadeOut 1.5s ease-in-out forwards; /* Disparition progressive en 0.5 seconde */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 
 
