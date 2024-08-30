@@ -1,8 +1,8 @@
+import React, { useState, useEffect } from "react";
 import useErrorStore from "@/app/store/useErrorStore";
 import useGeolocationStore from "@/app/store/useGeolocationStore";
 import useLanguageBrowserStore from "@/app/store/useLanguageBrowser";
 import { weatherWithLatitudeAndLongitude } from "@/app/functions/weatherWithLatitudeAndLongitude";
-import { useState, useEffect } from "react";
 
 interface ModaleAlertIPProps {
   className?: string;
@@ -10,40 +10,87 @@ interface ModaleAlertIPProps {
 
 export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
   const { error, setError } = useErrorStore();
-  const { latitude, longitude, setIsGeolocationEnabled, setCoordinates } = useGeolocationStore();
+  const { latitude, longitude, setIsGeolocationEnabled, setCoordinates } =
+    useGeolocationStore();
   const { language_browser } = useLanguageBrowserStore();
   const [isLoading, setIsLoading] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prevLogs => [...prevLogs, `${new Date().toISOString()}: ${message}`]);
+    setLogs((prevLogs) => [
+      ...prevLogs,
+      `${new Date().toISOString()}: ${message}`,
+    ]);
   };
 
   useEffect(() => {
-    addLog(`État initial - Latitude: ${latitude}, Longitude: ${longitude}, Langue: ${language_browser}`);
+    addLog(
+      `Initialisation - Latitude: ${latitude}, Longitude: ${longitude}, Langue: ${language_browser}`
+    );
 
-    if (latitude === null || longitude === null) {
-      addLog("Coordonnées non disponibles. Tentative de récupération...");
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const newLatitude = position.coords.latitude;
-          const newLongitude = position.coords.longitude;
-          addLog(`Position obtenue - Latitude: ${newLatitude}, Longitude: ${newLongitude}`);
-          setCoordinates(newLatitude, newLongitude);
-        },
-        (error) => {
-          addLog(`Erreur de géolocalisation: ${error.message}`);
-          addLog("Tentative de récupération de l'IP...");
-          // Ici, vous pouvez ajouter la logique pour récupérer la position via l'IP
-        },
-        { timeout: 10000, maximumAge: 0 }
-      );
-    }
-  }, [latitude, longitude, language_browser, setCoordinates]);
+    const fetchIPLocation = async () => {
+      try {
+        addLog("Début de la récupération par IP");
+        const ApiBundleKey = process.env.NEXT_PUBLIC_API_BUNDLE_KEY;
+        if (!ApiBundleKey) {
+          throw new Error("Clé API manquante");
+        }
+        const response = await fetch("https://api.ipify.org?format=json");
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        const dataIP = await response.json();
+        addLog(`IP récupérée: ${dataIP.ip}`);
+
+        const locationIP = await fetch(
+          `https://api.apibundle.io/ip-lookup?apikey=${ApiBundleKey}&ip=${dataIP.ip}`
+        );
+        if (!locationIP.ok) {
+          throw new Error(
+            `Erreur HTTP lors de la récupération de la localisation: ${locationIP.status}`
+          );
+        }
+        const locationLongitudeLatitude = await locationIP.json();
+        addLog(
+          `Réponse brute de l'API de géolocalisation : ${JSON.stringify(
+            locationLongitudeLatitude
+          )}`
+        );
+
+        if (
+          locationLongitudeLatitude.latitude &&
+          locationLongitudeLatitude.longitude
+        ) {
+          addLog(
+            `Tentative de définition des coordonnées : ${locationLongitudeLatitude.latitude}, ${locationLongitudeLatitude.longitude}`
+          );
+          setCoordinates(
+            locationLongitudeLatitude.latitude,
+            locationLongitudeLatitude.longitude
+          );
+        } else {
+          throw new Error("Coordonnées non trouvées dans la réponse");
+        }
+      } catch (ipError) {
+        addLog(
+          `Erreur détaillée lors de la récupération de l'adresse IP : ${ipError}`
+        );
+        setError("Impossible de récupérer les données de localisation");
+      }
+    };
+
+    fetchIPLocation();
+  }, [setCoordinates, setError, language_browser]);
+
+  useEffect(() => {
+    addLog(
+      `Mise à jour des coordonnées - Latitude: ${latitude}, Longitude: ${longitude}`
+    );
+  }, [latitude, longitude]);
 
   const handleContinue = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (latitude === null || longitude === null || language_browser === null) {
+    if (latitude === null || longitude === null || !language_browser) {
       const errorMessage = "Coordonnées ou langue non disponibles";
       addLog(errorMessage);
       setError(errorMessage);
@@ -53,7 +100,11 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
     setIsLoading(true);
     try {
       addLog("Tentative de récupération des données météo...");
-      await weatherWithLatitudeAndLongitude(latitude, longitude, language_browser);
+      await weatherWithLatitudeAndLongitude(
+        latitude,
+        longitude,
+        language_browser
+      );
       setIsGeolocationEnabled(true);
       addLog("Données météo récupérées avec succès");
     } catch (error) {
@@ -72,11 +123,14 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
         <button
           type="submit"
           className="button-alert"
-          disabled={isLoading || latitude === null || longitude === null || language_browser === null}
+          disabled={isLoading || latitude === null || longitude === null}
         >
           {isLoading ? "Chargement..." : "Continuer"}
         </button>
-        <p>Latitude: {latitude}, Longitude: {longitude}, Langue: {language_browser}</p>
+        <p>
+          Latitude: {latitude}, Longitude: {longitude}, Langue:{" "}
+          {language_browser}
+        </p>
       </form>
       <div className="debug-logs">
         <h3>Logs de débogage :</h3>

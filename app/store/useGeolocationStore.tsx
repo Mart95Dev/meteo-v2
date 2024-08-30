@@ -13,27 +13,29 @@ export interface locationWeatherData {
 interface GeolocationState {
   isGeolocationEnabled: boolean;
   latitude: number | null;
-  longitude: number | null;  
+  longitude: number | null;
   locationWeather: locationWeatherData | null;
-  setIsGeolocationEnabled: (isGeolocationEnabled: boolean) => void; 
-  setCoordinates: (latitude: number, longitude: number) => void;  
+  setIsGeolocationEnabled: (isGeolocationEnabled: boolean) => void;
+  setCoordinates: (latitude: number, longitude: number) => void;
   setLocationWeather: (data: locationWeatherData) => void;
 }
 
 const useGeolocationStore = create<GeolocationState>((set, get) => ({
-  isGeolocationEnabled: true, 
+  isGeolocationEnabled: true,
   locationWeather: null,
   latitude: null,
-  longitude: null,  
+  longitude: null,
   setIsGeolocationEnabled: (isGeolocationEnabled) =>
-    set({ isGeolocationEnabled }), 
+    set({ isGeolocationEnabled }),
   setCoordinates: (latitude, longitude) => {
-    console.log(`Tentative de définition des coordonnées : ${latitude}, ${longitude}`);
-    set({ latitude, longitude });
-    console.log(`Coordonnées après définition : ${get().latitude}, ${get().longitude}`);
-  },  
-  setLocationWeather: (data) =>
-    set({ locationWeather: data }),
+    console.log(`setCoordinates appelé avec : ${latitude}, ${longitude}`);
+    set((state) => {
+      console.log(`État précédent : ${state.latitude}, ${state.longitude}`);
+      return { latitude, longitude };
+    });
+    console.log(`Nouvel état : ${get().latitude}, ${get().longitude}`);
+  },
+  setLocationWeather: (data) => set({ locationWeather: data }),
 }));
 
 export default useGeolocationStore;
