@@ -1,18 +1,53 @@
 import useErrorStore from "@/app/store/useErrorStore";
-
+import useGeolocationStore from "@/app/store/useGeolocationStore";
+import useLanguageBrowserStore from "@/app/store/useLanguageBrowser";
+import { weatherWithLatitudeAndLongitude } from "@/app/functions/weatherWithLatitudeAndLongitude";
+import { useState } from "react";
 
 interface ModaleAlertIPProps {
   className?: string;
 }
 
-export default function ModaleAlertIP({className}: ModaleAlertIPProps) {
+export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
   const { error } = useErrorStore();
+  const { latitude, longitude, setIsGeolocationEnabled } =
+    useGeolocationStore();
+  const { language_browser } = useLanguageBrowserStore();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const handleContinue = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (latitude === null || longitude === null || !language_browser) {
+      console.error("Coordonnées ou langue non disponibles");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await weatherWithLatitudeAndLongitude(
+        latitude,
+        longitude,
+        language_browser
+      );
+      setIsGeolocationEnabled(true); // Ceci devrait déclencher la fermeture de la modale
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données météo:", error);
+      // Mettre à jour useErrorStore si nécessaire
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className={className}>   
-        <p className="message-alert">{error}</p>
-        <button className="button-alert">Continuer</button>      
-   </div>
+    <form onSubmit={handleContinue} className={className}>
+      <p className="message-alert">{error}</p>
+      <button
+        type="submit"
+        className="button-alert"
+        disabled={isLoading || !latitude || !longitude || !language_browser}
+      >
+        {isLoading ? "Chargement..." : "Continuer"}
+      </button>
+    </form>
   );
 }
