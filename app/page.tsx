@@ -48,7 +48,8 @@ export default function Home() {
   const { setGeoPhoto } = useFetchHeaderGeolocationPhotoStore();
   const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
   const { width } = useWindowSize();
-  const showAside = width >= 701; // Afficher l'aside si la largeur est >=
+  const showAside = width >= 701; 
+  const isMobile = width < 700;
 
   /// UseEffect logique récupération par ip et langage broswer
   useEffect(() => {
@@ -173,7 +174,7 @@ export default function Home() {
             )}
               
         </main>
-        {showAside ? <Aside /> : ""}
+        {showAside || isMobile ? <Aside isMobile={isMobile} /> : null}
         <Footer />
         {/* <SpeedInsights/> */}
       </div>
