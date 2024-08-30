@@ -20,14 +20,18 @@ interface GeolocationState {
   setLocationWeather: (data: locationWeatherData) => void;
 }
 
-const useGeolocationStore = create<GeolocationState>((set) => ({
+const useGeolocationStore = create<GeolocationState>((set, get) => ({
   isGeolocationEnabled: true, 
   locationWeather: null,
   latitude: null,
   longitude: null,  
   setIsGeolocationEnabled: (isGeolocationEnabled) =>
     set({ isGeolocationEnabled }), 
-  setCoordinates: (latitude, longitude) => set({ latitude, longitude }),  
+  setCoordinates: (latitude, longitude) => {
+    console.log(`Tentative de définition des coordonnées : ${latitude}, ${longitude}`);
+    set({ latitude, longitude });
+    console.log(`Coordonnées après définition : ${get().latitude}, ${get().longitude}`);
+  },  
   setLocationWeather: (data) =>
     set({ locationWeather: data }),
 }));
