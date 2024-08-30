@@ -98,7 +98,7 @@ export default function Home() {
       }
     );
 
-    setlanguageBrowser(browserLanguage === "fr" ? browserLanguage : "en");
+    setLanguageBrowser(browserLanguage === "fr" ? browserLanguage : "en");
 
     // Appeler la fonction pour initialiser l'écouteur d'événements au montage du composant
     handleGeolocationPermissionChange();
