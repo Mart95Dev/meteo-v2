@@ -10,53 +10,82 @@ interface ModaleAlertIPProps {
 
 export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
   const { error, setError } = useErrorStore();
-  const { latitude, longitude, setIsGeolocationEnabled } = useGeolocationStore();
+  const { latitude, longitude, setIsGeolocationEnabled, setCoordinates } = useGeolocationStore();
   const { language_browser } = useLanguageBrowserStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
+
+  const addLog = (message: string) => {
+    setLogs(prevLogs => [...prevLogs, `${new Date().toISOString()}: ${message}`]);
+  };
 
   useEffect(() => {
-    console.log("Latitude:", latitude);
-    console.log("Longitude:", longitude);
-    console.log("Language browser:", language_browser);
-    console.log("Langue du navigateur dans le composant:", language_browser);
-  }, [latitude, longitude, language_browser]);
+    addLog(`État initial - Latitude: ${latitude}, Longitude: ${longitude}, Langue: ${language_browser}`);
+
+    if (latitude === null || longitude === null) {
+      addLog("Coordonnées non disponibles. Tentative de récupération...");
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const newLatitude = position.coords.latitude;
+          const newLongitude = position.coords.longitude;
+          addLog(`Position obtenue - Latitude: ${newLatitude}, Longitude: ${newLongitude}`);
+          setCoordinates(newLatitude, newLongitude);
+        },
+        (error) => {
+          addLog(`Erreur de géolocalisation: ${error.message}`);
+          addLog("Tentative de récupération de l'IP...");
+          // Ici, vous pouvez ajouter la logique pour récupérer la position via l'IP
+        },
+        { timeout: 10000, maximumAge: 0 }
+      );
+    }
+  }, [latitude, longitude, language_browser, setCoordinates]);
 
   const handleContinue = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (latitude === null || longitude === null || !language_browser) {
+    if (latitude === null || longitude === null || language_browser === null) {
       const errorMessage = "Coordonnées ou langue non disponibles";
-      console.error(errorMessage);
+      addLog(errorMessage);
       setError(errorMessage);
       return;
     }
 
     setIsLoading(true);
     try {
-      await weatherWithLatitudeAndLongitude(
-        latitude,
-        longitude,
-        language_browser
-      );
+      addLog("Tentative de récupération des données météo...");
+      await weatherWithLatitudeAndLongitude(latitude, longitude, language_browser);
       setIsGeolocationEnabled(true);
+      addLog("Données météo récupérées avec succès");
     } catch (error) {
-      console.error("Erreur lors de la récupération des données météo:", error);
-      setError("Erreur lors de la récupération des données météo");
+      const errorMessage = "Erreur lors de la récupération des données météo";
+      addLog(`${errorMessage}: ${error}`);
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleContinue} className={className}>
-      <p className="message-alert">{error}</p>
-      <button
-        type="submit"
-        className="button-alert"
-        disabled={isLoading || !latitude || !longitude || !language_browser}
-      >
-        {isLoading ? "Chargement..." : "Continuer"}
-      </button>
-      <p>Latitude: {latitude}, Longitude: {longitude}, Langue: {language_browser}</p>
-    </form>
+    <div className={className}>
+      <form onSubmit={handleContinue}>
+        <p className="message-alert">{error}</p>
+        <button
+          type="submit"
+          className="button-alert"
+          disabled={isLoading || latitude === null || longitude === null || language_browser === null}
+        >
+          {isLoading ? "Chargement..." : "Continuer"}
+        </button>
+        <p>Latitude: {latitude}, Longitude: {longitude}, Langue: {language_browser}</p>
+      </form>
+      <div className="debug-logs">
+        <h3>Logs de débogage :</h3>
+        <ul>
+          {logs.map((log, index) => (
+            <li key={index}>{log}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
