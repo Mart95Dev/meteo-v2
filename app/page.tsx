@@ -16,7 +16,7 @@ import Footer from "./Layout/Footer/Footer";
 import Title from "./reusable/Title/Title";
 import ModaleAlertIP from "./components/Modale/ModaleAlertIP";
 import Aside from "./Layout/Aside/Aside";
-import SkeletonLoader from "./components/SkeletonLoader/SkeletonLoader";
+// import SkeletonLoader from "./components/SkeletonLoader/SkeletonLoader";
 import IconAnimation from "./components/IconAnimation/IconAnimation";
 
 import GeolocationClimatCountryWeather from "./components/Geolocation/GeolocationClimatCountryWeather";
@@ -26,7 +26,8 @@ import useFetchHeaderGeolocationPhotoStore from "./store/useFetchHeaderGeolocati
 
 export default function Home() {
   //state
-  const [isWeatherDataLoading, setIsWeatherDataLoading] = useState(true); // Nouvel état
+  const [isWeatherDataLoading, setIsWeatherDataLoading] = useState(true);
+  // const [dataLoaded, setDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const memoizedFetchHeaderGeolocationPhoto = useMemo(
     () => fetchHeaderGeolocationPhoto,
@@ -108,13 +109,14 @@ export default function Home() {
       weatherWithLatitudeAndLongitude(latitude, longitude, language_browser)
         .then(() => {
           setIsWeatherDataLoading(false);
+          // setDataLoaded(true);
         })
         .catch((error) => {
           console.error("Impossible de récupérer les données météorologiques");
           setIsWeatherDataLoading(false);
         })
         .finally(() => {
-          setIsLoading(false); // Arrêter le chargement initial après la récupération des données météo (succès ou erreur)
+          setIsLoading(false);
         });
     }
   }, [latitude, longitude, language_browser]);
@@ -160,19 +162,16 @@ export default function Home() {
         {!isGeolocationEnabled && ( 
           <ModaleAlertIP className={`modale-alert ${!isGeolocationEnabled ? 'fade-in' : 'fade-out'}`} />
         )}
-        <Suspense fallback={<SkeletonLoader />}>
-          {/* Encapsuler le contenu asynchrone dans Suspense */}
-          <div className={`container-weather ${isGeolocationEnabled && !isWeatherDataLoading ? 'fade-in' : 'fade-out'}`}> {/* Transition pour la box météo */}
+               
             {isGeolocationEnabled && !isWeatherDataLoading && ( 
-              <>
+               <div className={`container-weather ${isGeolocationEnabled && !isWeatherDataLoading ? 'fade-in data-loaded' : 'fade-out'}`}>              
                 <Title level={2}>
-                  <span>Météo de votre géolocalisation</span>
+                  <span>Météo basée sur votre position</span>
                 </Title>
                 <GeolocationClimatCountryWeather />
-              </>
+                </div>
             )}
-          </div>
-        </Suspense>
+              
         </main>
         {showAside ? <Aside /> : ""}
         <Footer />

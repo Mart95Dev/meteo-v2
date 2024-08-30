@@ -41,24 +41,24 @@ export default function GeolocationClimatCountryWeather() {
 
   return (
     <div className={!isGeolocationEnabled ? "weather-box-disabled" : "weather-box"}>
-      <div className="country-flag poppins-regular ">
+      <div className="country-flag poppins-regular weather-item">
         <FlagDisplay />
       </div>
-      <div className="country-name poppins-semibold ">
+      <div className="country-name poppins-semibold weather-item">
         <span>PAYS :</span>
         <span className={geoData(geo_country)}>
           {geo_country.toUpperCase()}
         </span>
       </div>
-      <div className="capital-name poppins-semibold ">
+      <div className="capital-name poppins-semibold weather-item">
         <span>VILLE :</span>
         <span className={geoData(geo_city)}>{geo_city.toUpperCase()}</span>
       </div>
 
-      <div className="weather-type poppins-semibold">
+      <div className="weather-type poppins-semibold weather-item">
         {locationWeather?.description.toUpperCase()}
       </div>
-      <div className="weather-icon">
+      <div className="weather-icon weather-item">
         {isLoading ? (
           <p>Recherche en cours...</p>
         ) : (
@@ -66,10 +66,10 @@ export default function GeolocationClimatCountryWeather() {
           <Image src={iconUrl} alt={altIcon} width={80} height={80} />
         )}
       </div>
-      <div className="temperature-label poppins-semibold">
+      <div className="temperature-label poppins-semibold weather-item">
         <span>Température</span>
       </div>
-      <div className="real-feel">
+      <div className="real-feel weather-item">
         <span>
           Réelle :
           <span className={weatherGeoInfo(locationWeather)}>
@@ -77,26 +77,26 @@ export default function GeolocationClimatCountryWeather() {
           </span>
         </span>
       </div>
-      <div className="feels-like">
+      <div className="feels-like weather-item">
         <span>Ressenti: </span>
         <span className={weatherGeoInfo(locationWeather)}>
           {locationWeather?.temp_feel} °
         </span>
       </div>
-      <div className="climate-label poppins-semibold">Climat</div>
+      <div className="climate-label poppins-semibold weather-item">Climat</div>
       <div className="rain ">
         <span>Pluie:</span>
         <span className={weatherGeoInfo(locationWeather)}>
           {locationWeather?.rain}
         </span>
       </div>
-      <div className="wind ">
+      <div className="wind weather-item">
         <span>Vent:</span>
         <span className={weatherGeoInfo(locationWeather)}>
           {locationWeather?.wind} km/h
         </span>
       </div>
-      <div className="humidity ">
+      <div className="humidity weather-item">
         <span>Humidité:</span>
         <span className={weatherGeoInfo(locationWeather)}>
           {locationWeather?.humidity} %
