@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import useGeolocationStore from "@/app/store/useGeolocationStore";
+import dynamic from 'next/dynamic';
+
+const DynamicMap = dynamic(() => import('@/app/components/Map/Map'), {
+  ssr: false
+});
 
 interface AsideProps {
   isMobile: boolean;
@@ -9,7 +14,7 @@ interface AsideProps {
 export default function Aside({ isMobile }: AsideProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const { isGeolocationEnabled } = useGeolocationStore();
+  const { isGeolocationEnabled, latitude, longitude } = useGeolocationStore();
 
   const toggleAside = () => {
     setIsOpen(!isOpen);
@@ -17,16 +22,27 @@ export default function Aside({ isMobile }: AsideProps) {
     setTimeout(() => setIsActive(false), 300); // Réinitialise après 300ms
   };
 
+  const mapHeight = isMobile ? '100%' : '100%';
+
+  
+  const renderAsideContent = () => {
+    if (!isGeolocationEnabled) {
+      return <p className="aside-text">Localisation en attente</p>;
+    }
+    return (
+      <DynamicMap latitude={latitude} longitude={longitude} height={mapHeight} />
+    );
+  };
+
   if (!isMobile) {
     return (
-      <aside>
-        <p>aside</p>
-        {/* Contenu de l'Aside en mode desktop */}
+      <aside className="desktop-aside">
+        {renderAsideContent()}
       </aside>
     );
   }
 
-  return (
+    return (
     <>
       {isMobile && isGeolocationEnabled && (
         <button 
@@ -38,8 +54,7 @@ export default function Aside({ isMobile }: AsideProps) {
         </button>
       )}
       <aside className={`mobile ${isOpen ? 'open' : ''}`}>
-        <p>aside</p>
-        {/* Contenu de l'Aside en mode mobile */}
+        {renderAsideContent()}
       </aside>
     </>
   );
