@@ -2,7 +2,7 @@
 .modale-alert {
   background-color: var(--color-background-box);
   min-height: 260px;
-  max-height: 290px;
+  max-height: 347px;
   padding: 0px 0 10px 0;
   display: flex;
   flex-direction: column;
