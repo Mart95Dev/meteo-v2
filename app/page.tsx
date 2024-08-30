@@ -28,7 +28,7 @@ import useFetchHeaderGeolocationPhotoStore from "./store/useFetchHeaderGeolocati
 export default function Home() {
   //state
   const [isWeatherDataLoading, setIsWeatherDataLoading] = useState(true);
-  // const [dataLoaded, setDataLoaded] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const memoizedFetchHeaderGeolocationPhoto = useMemo(
     () => fetchHeaderGeolocationPhoto,
@@ -52,17 +52,22 @@ export default function Home() {
   const showAside = width >= 701; 
   const isMobile = width < 700;
 
+  const addLog = (message: string) => {
+    setLogs(prevLogs => [...prevLogs, message]);
+  };
+
   /// UseEffect logique récupération par ip et langage broswer
   useEffect(() => {
     const browserLanguage = window.navigator.language.slice(0, 2);
+    addLog(`Langue du navigateur : ${browserLanguage}`);
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log("Position obtenue:", position.coords);
+        addLog(`Position obtenue: ${JSON.stringify(position.coords)}`);
         setCoordinates(position.coords.latitude, position.coords.longitude);
       },
       async (error) => {
-        console.error("Erreur de géolocalisation:", error);
+        addLog(`Erreur de géolocalisation: ${error.message}`);
         const errorMessage =
           browserLanguage == "fr"
             ? "La géolocalisation est désactivée sur votre navigateur. Nous utiliserons votre adresse IP pour estimer votre position et vous fournir une prévision météo."
