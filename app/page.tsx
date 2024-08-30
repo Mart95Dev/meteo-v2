@@ -1,7 +1,8 @@
 "use client";
 
 // import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import 'leaflet/dist/leaflet.css';
 import useGeolocationStore from "./store/useGeolocationStore";
 import useLanguageBrowserStore from "./store/useLanguageBrowser";
 import useErrorStore from "./store/useErrorStore";
@@ -16,7 +17,6 @@ import Footer from "./Layout/Footer/Footer";
 import Title from "./reusable/Title/Title";
 import ModaleAlertIP from "./components/Modale/ModaleAlertIP";
 import Aside from "./Layout/Aside/Aside";
-// import SkeletonLoader from "./components/SkeletonLoader/SkeletonLoader";
 import IconAnimation from "./components/IconAnimation/IconAnimation";
 
 import GeolocationClimatCountryWeather from "./components/Geolocation/GeolocationClimatCountryWeather";
