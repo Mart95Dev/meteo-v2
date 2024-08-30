@@ -58,9 +58,11 @@ export default function Home() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log("Position obtenue:", position.coords);
         setCoordinates(position.coords.latitude, position.coords.longitude);
       },
       async (error) => {
+        console.error("Erreur de géolocalisation:", error);
         const errorMessage =
           browserLanguage == "fr"
             ? "La géolocalisation est désactivée sur votre navigateur. Nous utiliserons votre adresse IP pour estimer votre position et vous fournir une prévision météo."
@@ -120,6 +122,9 @@ export default function Home() {
         .finally(() => {
           setIsLoading(false);
         });
+    } else {
+      console.log("Coordonnées non disponibles:", { latitude, longitude });
+      setIsLoading(false);
     }
   }, [latitude, longitude, language_browser]);
 
