@@ -11,6 +11,7 @@ import { useWindowSize } from "./hook/useWindowSize";
 import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
 import { fetchHeaderGeolocationPhoto } from "./functions/fetchHeaderGeolocationPhoto";
 import { handleGeolocationPermissionChange } from "./functions/handleGeolocationPermissionChange";
+import { initializeLanguageBrowser } from '@/app/store/useLanguageBrowser';
 
 import Header from "./Layout/Header/Header";
 import Footer from "./Layout/Footer/Footer";
@@ -46,7 +47,7 @@ export default function Home() {
 
   const { geo_capital } = useCountryStore();
   const { setGeoPhoto } = useFetchHeaderGeolocationPhotoStore();
-  const { language_browser, setlanguageBrowser } = useLanguageBrowserStore();
+  const { language_browser, setLanguageBrowser } = useLanguageBrowserStore();
   const { width } = useWindowSize();
   const showAside = width >= 701; 
   const isMobile = width < 700;
@@ -101,7 +102,7 @@ export default function Home() {
 
     // Appeler la fonction pour initialiser l'écouteur d'événements au montage du composant
     handleGeolocationPermissionChange();
-  }, [setCoordinates, setlanguageBrowser, setError, setIsGeolocationEnabled]);
+  }, [setCoordinates, setLanguageBrowser, setError, setIsGeolocationEnabled]);
 
   /// useEffect logique récupération donnée météo
   useEffect(() => {
@@ -144,6 +145,11 @@ export default function Home() {
       });
     }
   }, [geo_capital, setGeoPhoto, memoizedFetchHeaderGeolocationPhoto]);
+
+  useEffect(() => {
+    initializeLanguageBrowser();
+  }, []);
+  
 
   return (
     <>

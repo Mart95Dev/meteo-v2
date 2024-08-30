@@ -2,23 +2,31 @@ import useErrorStore from "@/app/store/useErrorStore";
 import useGeolocationStore from "@/app/store/useGeolocationStore";
 import useLanguageBrowserStore from "@/app/store/useLanguageBrowser";
 import { weatherWithLatitudeAndLongitude } from "@/app/functions/weatherWithLatitudeAndLongitude";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ModaleAlertIPProps {
   className?: string;
 }
 
 export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
-  const { error } = useErrorStore();
-  const { latitude, longitude, setIsGeolocationEnabled } =
-    useGeolocationStore();
+  const { error, setError } = useErrorStore();
+  const { latitude, longitude, setIsGeolocationEnabled } = useGeolocationStore();
   const { language_browser } = useLanguageBrowserStore();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    console.log("Latitude:", latitude);
+    console.log("Longitude:", longitude);
+    console.log("Language browser:", language_browser);
+    console.log("Langue du navigateur dans le composant:", language_browser);
+  }, [latitude, longitude, language_browser]);
 
   const handleContinue = async (e: React.FormEvent) => {
     e.preventDefault();
     if (latitude === null || longitude === null || !language_browser) {
-      console.error("Coordonnées ou langue non disponibles");
+      const errorMessage = "Coordonnées ou langue non disponibles";
+      console.error(errorMessage);
+      setError(errorMessage);
       return;
     }
 
@@ -29,10 +37,10 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
         longitude,
         language_browser
       );
-      setIsGeolocationEnabled(true); // Ceci devrait déclencher la fermeture de la modale
+      setIsGeolocationEnabled(true);
     } catch (error) {
       console.error("Erreur lors de la récupération des données météo:", error);
-      // Mettre à jour useErrorStore si nécessaire
+      setError("Erreur lors de la récupération des données météo");
     } finally {
       setIsLoading(false);
     }
@@ -48,6 +56,7 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
       >
         {isLoading ? "Chargement..." : "Continuer"}
       </button>
+      <p>Latitude: {latitude}, Longitude: {longitude}, Langue: {language_browser}</p>
     </form>
   );
 }
