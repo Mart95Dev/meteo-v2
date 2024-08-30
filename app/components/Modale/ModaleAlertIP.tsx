@@ -27,10 +27,11 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
     addLog(
       `Initialisation - Latitude: ${latitude}, Longitude: ${longitude}, Langue: ${language_browser}`
     );
+    addLog(`API Bundle Key: ${process.env.NEXT_PUBLIC_API_BUNDLE_KEY || 'Non définie'}`);
 
     const fetchIPLocation = async () => {
       try {
-        addLog("Début de la récupération par IP");
+        addLog("Début de la récupération par IP");      
         const ApiBundleKey = process.env.NEXT_PUBLIC_API_BUNDLE_KEY;
         if (!ApiBundleKey) {
           throw new Error("Clé API manquante");
@@ -80,7 +81,7 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
     };
 
     fetchIPLocation();
-  }, [setCoordinates, setError, language_browser]);
+  }, [setCoordinates, setError, language_browser, latitude, longitude]);
 
   useEffect(() => {
     addLog(
