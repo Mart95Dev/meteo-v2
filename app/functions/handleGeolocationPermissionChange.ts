@@ -1,21 +1,18 @@
 import useGeolocationStore from "@/app/store/useGeolocationStore";
 
-
-// Fonction pour gérer les changements de permission de géolocalisation
 export const handleGeolocationPermissionChange = () => {
   if (navigator.permissions) {
-    navigator.permissions.query({ name: 'geolocation' })
+    navigator.permissions.query({ name: 'geolocation' as PermissionName })
       .then((permissionStatus: PermissionStatus) => {
-        permissionStatus.onchange = () => { // Attacher l'écouteur d'événements à permissionStatus
+        permissionStatus.onchange = () => {
           if (permissionStatus.state === 'granted') {
-            // La géolocalisation a été activée, récupérez à nouveau les coordonnées
             navigator.geolocation.getCurrentPosition(
-              (position) => {
+              (position: GeolocationPosition) => {
                 useGeolocationStore.getState().setCoordinates(position.coords.latitude, position.coords.longitude);
                 useGeolocationStore.getState().setIsGeolocationEnabled(true);
               },
-              (error) => {
-                console.error("Erreur de géolocalisation :", error);
+              (error: GeolocationPositionError) => {
+                console.error("Erreur de géolocalisation :", error.message);
               }
             );
           }

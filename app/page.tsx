@@ -58,56 +58,62 @@ export default function Home() {
 
   /// UseEffect logique récupération par ip et langage broswer
   useEffect(() => {
-    const browserLanguage = window.navigator.language.slice(0, 2);
-    addLog(`Langue du navigateur : ${browserLanguage}`);
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
+    const fetchCoordinates = async () => {
+      const browserLanguage = window.navigator.language.slice(0, 2);
+      addLog(`Langue du navigateur : ${browserLanguage}`);
+  
+      try {
+        const position: GeolocationPosition = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
         addLog(`Position obtenue: ${JSON.stringify(position.coords)}`);
         setCoordinates(position.coords.latitude, position.coords.longitude);
-      },
-      async (error) => {
-        addLog(`Erreur de géolocalisation: ${error.message}`);
-        const errorMessage =
-          browserLanguage == "fr"
-            ? "La géolocalisation est désactivée sur votre navigateur. Nous utiliserons votre adresse IP pour estimer votre position et vous fournir une prévision météo."
-            : "Geolocation is disabled in your browser. We will use your IP address to estimate your location and provide you with a weather forecast.";
-        setError(errorMessage);
-        setIsGeolocationEnabled(false); // Géolocalisation navigateur non autorisé
-
-        try {
-          const ApiBundleKey = process.env.NEXT_PUBLIC_API_BUNDLE_KEY;
-          const response = await fetch("https://api.ipify.org?format=json");
-          const dataIP = await response.json();
-
-          if (dataIP) {
-            const locationIP = await fetch(
-              `https://api.apibundle.io/ip-lookup?apikey=${ApiBundleKey}&ip=${dataIP.ip}`
-            );
-            const locationLongitudeLatitude = await locationIP.json();
-
-            setCoordinates(
-              locationLongitudeLatitude.latitude,
-              locationLongitudeLatitude.longitude
-            );
-          }
-        } catch (ipError) {
-          console.error(
-            "Erreur lors de la récupération de l'adresse IP :",
-            ipError
-          );
+      } catch (error) {
+        if (error instanceof GeolocationPositionError) {
+          addLog(`Erreur de géolocalisation: ${error.message}`);
           const errorMessage =
             browserLanguage == "fr"
-              ? "Impossible de récupérer les données de localisation par votre Ip ou la localisation via votre naviagateur."
-              : "Unable to retrieve location data from your IP or location via your browser.";
+              ? "La géolocalisation est désactivée sur votre navigateur. Nous utiliserons votre adresse IP pour estimer votre position et vous fournir une prévision météo."
+              : "Geolocation is disabled in your browser. We will use your IP address to estimate your location and provide you with a weather forecast.";
           setError(errorMessage);
+          setIsGeolocationEnabled(false);
+  
+          try {
+            const ApiBundleKey = process.env.NEXT_PUBLIC_API_BUNDLE_KEY;
+            const response = await fetch("https://api.ipify.org?format=json");
+            const dataIP = await response.json();
+  
+            if (dataIP) {
+              const locationIP = await fetch(
+                `https://api.apibundle.io/ip-lookup?apikey=${ApiBundleKey}&ip=${dataIP.ip}`
+              );
+              const locationLongitudeLatitude = await locationIP.json();
+  
+              setCoordinates(
+                locationLongitudeLatitude.latitude,
+                locationLongitudeLatitude.longitude
+              );
+            }
+          } catch (ipError) {
+            console.error(
+              "Erreur lors de la récupération de l'adresse IP :",
+              ipError
+            );
+            const ipErrorMessage =
+              browserLanguage == "fr"
+                ? "Impossible de récupérer les données de localisation par votre IP ou la localisation via votre navigateur."
+                : "Unable to retrieve location data from your IP or location via your browser.";
+            setError(ipErrorMessage);
+          }
+        } else {
+          addLog(`Erreur inconnue: ${error}`);
         }
       }
-    );
-
-    setLanguageBrowser(browserLanguage === "fr" ? browserLanguage : "en");
-
-    // Appeler la fonction pour initialiser l'écouteur d'événements au montage du composant
+  
+      setLanguageBrowser(browserLanguage === "fr" ? browserLanguage : "en");
+    };
+  
+    fetchCoordinates();
     handleGeolocationPermissionChange();
   }, [setCoordinates, setLanguageBrowser, setError, setIsGeolocationEnabled]);
 
