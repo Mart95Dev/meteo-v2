@@ -157,13 +157,10 @@ header {
 
 main {
   grid-area: main;
-  /* flex: 1 0 auto;
-  padding: 0 0.6rem 0.6rem 0.6rem;  */
-  flex: 1;
   display: flex;
+  flex: 1 0 auto;  
   flex-direction: column;
   padding: 0 0.6rem 0.6rem 0.6rem;
-  overflow-y: auto;
 }
 
 aside {
