@@ -1,20 +1,10 @@
-/* Styles de base pour le corps et le HTML */
-.firefox-mobile html,
-.firefox-mobile body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
 .firefox-mobile {
-  /* width: 100vw;
-  height: 100vh; */
   overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
   background-color: #fff;
 }
 
@@ -26,107 +16,49 @@
   overflow: hidden;
 }
 
-.firefox-mobile header {
-  flex-shrink: 0;
-}
-
 .firefox-mobile main {
   flex: 1;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .firefox-mobile .container-weather {
-  height: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  overflow-y: hidden;
-}
-
-.firefox-mobile .weather-box {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.firefox-mobile .image-location-container {
-  width: 100%;
-  padding: 0;
-}
-
-.firefox-mobile .image-location-container img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.firefox-mobile .country-info {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-}
-
-.firefox-mobile .country-info img {
-  width: 30px;
-  height: auto;
-  margin-right: 10px;
-}
-
-.firefox-mobile .weather-info {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 5px 10px;
-  align-items: center;
-}
-
-.firefox-mobile .weather-info > * {
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.firefox-mobile .aside-toggle {
-  display: none;
-}
-
-.firefox-mobile footer {
-  flex-shrink: 0;
   padding: 10px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .firefox-mobile .box-title {
   position: relative;
-  height: 1.8rem;
+  flex-shrink: 0;
   margin-bottom: 10px;
 }
 
 .firefox-mobile .title {
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  border: 1px solid lightgray;
-  background-color: var(--color-background-box);
-  top: -35px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  padding: 10px;
-  border-radius: 5px;
-  font-size: clamp(0.75rem, 2vw, 1rem);
-  width: 60%;
-  min-width: 250px;
-  max-width: 350px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 80%;
+  max-width: 400px;
   z-index: 10;
+  white-space: normal;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 5px;
 }
 
-/* Suppression des bandes bleues */
-.firefox-mobile::before,
-.firefox-mobile::after {
-  content: none;
+.firefox-mobile .weather-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  overflow: hidden;
 }
 
 /* Ajustements pour les petits écrans */
@@ -138,40 +70,11 @@
     padding-right: 5px;
   }
 
-  .firefox-mobile .aside-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 60px;
-    background-color: rgba(var(--color-primary));
-    color: white;
-    border: none;
-    border-radius: 5px 0 0 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    z-index: 1001;
+  .firefox-mobile .title {
+    font-size: 0.8rem;
   }
 
-  .firefox-mobile aside.mobile {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 99%;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    background-color: white;
-    z-index: 1000;
-    overflow-y: hidden;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .firefox-mobile aside.mobile.open {
-    transform: translateX(0);
+  .firefox-mobile .weather-box {
+    font-size: 0.9rem;
   }
 }
