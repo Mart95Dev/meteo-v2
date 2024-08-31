@@ -15,18 +15,25 @@
 
 .message-alert {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-grow: 0.8;
+  padding: 0 35px;
   text-align: justify;
-  padding: 35px;
-  flex: 1;
 }
 
 .button-alert {
+  display: block;
   width: 20%;
   min-width: 120px;
   padding: 10px;
   margin: auto;
   border-radius: 5px;
   background-color: rgba(var(--color-primary));
+}
+
+form { 
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
