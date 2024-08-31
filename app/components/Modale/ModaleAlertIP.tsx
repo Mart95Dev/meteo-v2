@@ -89,11 +89,7 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
           disabled={isLoading || latitude === null || longitude === null}
         >
           {isLoading ? "Chargement..." : "Continuer"}
-        </button>
-        <p>
-          Latitude: {latitude}, Longitude: {longitude}, Langue:{" "}
-          {language_browser}
-        </p>
+        </button>        
       </form>
     </div>
   );
