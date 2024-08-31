@@ -1,12 +1,12 @@
 @import url("variables.css");
 @import url("fonts.css");
-@import url("firefox-mobiles.css");
 @import url("loading.css");
 @import url("flag.css");
 @import url("title.css");
 @import url("modale.css");
 @import url("geolocation-image.css");
 @import url("box-climat-information.css");
+@import url("firefox-mobiles.css");
 
 * {
   box-sizing: border-box;
