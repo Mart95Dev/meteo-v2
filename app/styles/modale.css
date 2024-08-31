@@ -40,16 +40,16 @@ form {
 
 .firefox-mobile .modale-alert {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;  
   height: 100%;
   padding: 10px;
 }
 
 .firefox-mobile .modale-alert .message-alert {
   font-size: 0.9rem;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
 }
 
