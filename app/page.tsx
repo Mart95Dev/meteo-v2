@@ -1,6 +1,5 @@
 "use client";
 
-// import { SpeedInsights } from "@vercel/speed-insights/next"
 import { useEffect, useMemo, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import useGeolocationStore from "./store/useGeolocationStore";
@@ -26,9 +25,7 @@ import useCountryStore from "./store/useCountryStore";
 import useFetchHeaderGeolocationPhotoStore from "./store/useFetchHeaderGeolocationPhoto";
 
 export default function Home() {
-  //state
   const [isWeatherDataLoading, setIsWeatherDataLoading] = useState(true);
-  const [logs, setLogs] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const memoizedFetchHeaderGeolocationPhoto = useMemo(
     () => fetchHeaderGeolocationPhoto,
@@ -52,21 +49,9 @@ export default function Home() {
   const showAside = width >= 701;
   const isMobile = width < 700;
 
-  const addLog = (message: string) => {
-    setLogs((prevLogs) => [...prevLogs, message]);
-  };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      addLog(`Vérification finale des coordonnées : ${latitude}, ${longitude}`);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [latitude, longitude]);
-
-  /// UseEffect logique récupération par ip et langage broswer
   useEffect(() => {
     const fetchCoordinates = async () => {
       const browserLanguage = window.navigator.language.slice(0, 2);
-      addLog(`Langue du navigateur : ${browserLanguage}`);
 
       try {
         const position: GeolocationPosition = await new Promise(
@@ -74,11 +59,9 @@ export default function Home() {
             navigator.geolocation.getCurrentPosition(resolve, reject);
           }
         );
-        addLog(`Position obtenue: ${JSON.stringify(position.coords)}`);
         setCoordinates(position.coords.latitude, position.coords.longitude);
       } catch (error) {
         if (error instanceof GeolocationPositionError) {
-          addLog(`Erreur de géolocalisation: ${error.message}`);
           const errorMessage =
             browserLanguage == "fr"
               ? "La géolocalisation est désactivée sur votre navigateur. Nous utiliserons votre adresse IP pour estimer votre position et vous fournir une prévision météo."
@@ -87,7 +70,6 @@ export default function Home() {
           setIsGeolocationEnabled(false);
 
           try {
-            addLog("Début de la récupération par IP");
             const ApiBundleKey = process.env.NEXT_PUBLIC_API_BUNDLE_KEY;
             if (!ApiBundleKey) {
               throw new Error("Clé API manquante");
@@ -97,7 +79,6 @@ export default function Home() {
               throw new Error(`Erreur HTTP: ${response.status}`);
             }
             const dataIP = await response.json();
-            addLog(`IP récupérée: ${dataIP.ip}`);
 
             const locationIP = await fetch(
               `https://api.apibundle.io/ip-lookup?apikey=${ApiBundleKey}&ip=${dataIP.ip}`
@@ -108,11 +89,6 @@ export default function Home() {
               );
             }
             const locationLongitudeLatitude = await locationIP.json();
-            addLog(
-              `Coordonnées récupérées: ${JSON.stringify(
-                locationLongitudeLatitude
-              )}`
-            );
 
             if (
               locationLongitudeLatitude.latitude &&
@@ -122,16 +98,10 @@ export default function Home() {
                 locationLongitudeLatitude.latitude,
                 locationLongitudeLatitude.longitude
               );
-              addLog(
-                `Coordonnées définies: ${locationLongitudeLatitude.latitude}, ${locationLongitudeLatitude.longitude}`
-              );
             } else {
               throw new Error("Coordonnées non trouvées dans la réponse");
             }
           } catch (ipError) {
-            addLog(
-              `Erreur détaillée lors de la récupération de l'adresse IP : ${ipError}`
-            );
             setError("Impossible de récupérer les données de localisation");
             console.error(
               "Erreur lors de la récupération de l'adresse IP :",
@@ -144,7 +114,7 @@ export default function Home() {
             setError(ipErrorMessage);
           }
         } else {
-          addLog(`Erreur inconnue: ${error}`);
+          console.error("Erreur inconnue:", error);
         }
       }
 
@@ -155,14 +125,12 @@ export default function Home() {
     handleGeolocationPermissionChange();
   }, [setCoordinates, setLanguageBrowser, setError, setIsGeolocationEnabled]);
 
-  /// useEffect logique récupération donnée météo
   useEffect(() => {
     if (latitude !== null && longitude !== null && language_browser) {
       setIsWeatherDataLoading(true);
       weatherWithLatitudeAndLongitude(latitude, longitude, language_browser)
         .then(() => {
           setIsWeatherDataLoading(false);
-          // setDataLoaded(true);
         })
         .catch((error) => {
           console.error("Impossible de récupérer les données météorologiques");
@@ -178,14 +146,6 @@ export default function Home() {
   }, [latitude, longitude, language_browser]);
 
   useEffect(() => {
-    if (latitude === undefined || longitude === undefined) {
-      addLog("Coordonnées toujours undefined après tentative de récupération");
-      setError("Impossible de déterminer votre position");
-    }
-  }, [latitude, longitude, setError]);
-
-  /// useEffect récupération photo
-  useEffect(() => {
     if (geo_capital !== "") {
       memoizedFetchHeaderGeolocationPhoto().then((data) => {
         if (data) {
@@ -200,20 +160,13 @@ export default function Home() {
           const selectedImage = imagesWithLargeUrl[randomIndex].largeImageURL;
           setGeoPhoto(selectedImage);
           geoPhotoCapitalRef.current = null;
-
-          return;
         }
       });
     }
   }, [geo_capital, setGeoPhoto, memoizedFetchHeaderGeolocationPhoto]);
 
-  useEffect(() => {
-    initializeLanguageBrowser();
-  }, []);
-
   return (
     <>
-      {/* Afficher IconAnimation au début du chargement initial */}
       <div
         className={`icon-animation-container ${
           isLoading ? "" : "icon-animation-container-disabled"
@@ -250,7 +203,6 @@ export default function Home() {
         </main>
         {showAside || isMobile ? <Aside isMobile={isMobile} /> : null}
         <Footer />
-        {/* <SpeedInsights/> */}
       </div>
     </>
   );

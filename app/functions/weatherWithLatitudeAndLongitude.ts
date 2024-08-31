@@ -10,8 +10,10 @@ export const weatherWithLatitudeAndLongitude = async (
   longitude: number,
   language: string
 ) => {
+  console.log(`Début de weatherWithLatitudeAndLongitude: lat=${latitude}, lon=${longitude}, lang=${language}`);
   try {
     const apiKey = process.env.NEXT_PUBLIC_API_KEY_OPENWEATHER;
+    console.log(`Clé API OpenWeather: ${apiKey ? "Présente" : "Manquante"}`);
 
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=${language}`
@@ -96,12 +98,16 @@ export const weatherWithLatitudeAndLongitude = async (
     ///////////////////////////////////
 
     useCountryStore.getState().setGeoCity(data.city.name);
+    console.log("Données météo récupérées avec succès");
+    console.log("Mise à jour du store avec les nouvelles données météo");
     useGeolocationStore.getState().setLocationWeather(responseWeatherData);
+    console.log("Store mis à jour avec succès");
   } catch (error) {
     console.error(
       "Erreur lors de la récupération des données de la ville :",
       error
     );
+    console.error("Erreur dans weatherWithLatitudeAndLongitude:", error);
     throw error; // Propager l'erreur pour la gestion dans useEffect
   }
 };
