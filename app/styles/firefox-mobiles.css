@@ -1,6 +1,7 @@
 .firefox-mobile {
   overflow-x: hidden;
   width: 100%;
+  max-width: 100vw;
   position: relative;
   background-color: #fff;
 }
@@ -9,23 +10,20 @@
 .firefox-mobile .app-container,
 .firefox-mobile main {
   width: 100%;
-  max-width: 100%;
+  max-width: 100vw;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
 
-.firefox-mobile .container-weather,
-.firefox-mobile .weather-box,
-.firefox-mobile .image-location-container {
+.firefox-mobile .container-weather {
   width: 100%;
-  max-width: 100%;
-  margin: 0;
   padding: 10px;
   box-sizing: border-box;
 }
 
 .firefox-mobile .image-location-container {
+  width: 100%;
   padding: 0;
 }
 
@@ -35,52 +33,68 @@
   object-fit: cover;
 }
 
+.firefox-mobile .country-info {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.firefox-mobile .country-info img {
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
+}
+
 .firefox-mobile .weather-box {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 5px;
+  gap: 10px;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.firefox-mobile .weather-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 10px;
   align-items: center;
 }
 
-.firefox-mobile .weather-box > * {
+.firefox-mobile .weather-info > * {
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Suppression de la bande bleue */
+.firefox-mobile .aside-toggle {
+  display: none;
+}
+
+.firefox-mobile footer {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+  bottom: 0;
+}
+
+/* Suppression des bandes bleues */
 .firefox-mobile::before,
 .firefox-mobile::after {
   content: none;
 }
 
-/* Ajustement pour le contenu décalé */
-.firefox-mobile .app-container {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-/* Assurer que le texte ne soit pas coupé */
-.firefox-mobile .weather-box,
-.firefox-mobile .container-weather {
-  word-break: break-word;
-}
-
-/* Ajustement pour les éléments tronqués */
-.firefox-mobile .weather-box > div {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Suppression de tout padding ou margin excessif */
-.firefox-mobile * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Ajustement spécifique pour le conteneur principal */
-.firefox-mobile .container-weather {
-  padding: 10px;
+/* Ajustements pour les petits écrans */
+@media (max-width: 699px) {
+  .firefox-mobile .app-container,
+  .firefox-mobile main,
+  .firefox-mobile .container-weather {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  .firefox-mobile .weather-box {
+    grid-template-columns: 1fr;
+  }
 }
