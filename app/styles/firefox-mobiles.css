@@ -19,7 +19,6 @@
 .firefox-mobile header {
   display: flex;
   flex-direction: column;
-  min-height: 235px;
   overflow: hidden;
 }
 
@@ -46,18 +45,16 @@
   display: flex;
   flex-direction: column;
   margin-top: 0;
-  overflow: hidden; /* Ajout de cette ligne */
 }
-
 
 .firefox-mobile .box-title {
   position: relative;
   flex-shrink: 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .firefox-mobile .title {
-  position: static; /* Rétablit la position par défaut */
+  position: static;
   width: 100%;
   font-size: 0.8rem;
   text-align: center;
@@ -74,23 +71,19 @@
 }
 
 .firefox-mobile .country-info img {
-  width: 15px; /* Réduit la taille du drapeau */
+  width: 15px;
   height: auto;
 }
 
 .firefox-mobile .country-info span {
-  font-size: 0.7rem; /* Réduit la taille du texte pour le pays et la ville */
+  font-size: 0.7rem;
 }
 
 .firefox-mobile .weather-box {
   flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   gap: 5px;
-  max-height: calc(100vh - 235px - 50px); /* Ajustez ces valeurs selon vos besoins */
-  padding-right: 5px; /* Pour éviter que le contenu ne touche la barre de défilement */
 }
 
 .firefox-mobile .weather-box > * {
@@ -98,8 +91,16 @@
   padding: 2px 0;
 }
 
-/* Ajustements pour les petits écrans */
+.firefox-mobile footer {
+  flex-shrink: 0;
+  padding: 0.3rem;
+}
+
 @media (max-width: 699px) {
+  .firefox-mobile header {
+    max-height: 25vh;
+  }
+
   .firefox-mobile .app-container,
   .firefox-mobile main,
   .firefox-mobile .container-weather {
@@ -109,10 +110,21 @@
 
   .firefox-mobile .weather-box {
     font-size: 0.8rem;
+    max-height: calc(75vh - 50px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 5px;
   }
-}
 
-.firefox-mobile footer {
-  flex-shrink: 0;
-  padding: 0.3rem;
+  .firefox-mobile .container-weather {
+    overflow: hidden;
+  }
+
+  .firefox-mobile .title {
+    font-size: 0.7rem;
+  }
+
+  .firefox-mobile .country-info span {
+    font-size: 0.6rem;
+  }
 }
