@@ -49,6 +49,18 @@ export default function Home() {
   const isMobile = width < 700;
 
   useEffect(() => {
+    const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+
+    if (isFirefox && isMobile) {
+      document.body.classList.add("firefox-mobile");
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchCoordinates = async () => {
       const browserLanguage = window.navigator.language.slice(0, 2);
 

@@ -6,6 +6,7 @@
 @import url("modale.css");
 @import url("geolocation-image.css");
 @import url("box-climat-information.css");
+@import url("firefox-mobiles.css");
 
 * {
   box-sizing: border-box;
