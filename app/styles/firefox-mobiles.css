@@ -46,7 +46,10 @@
   display: flex;
   flex-direction: column;
   margin-top: 0;
+  overflow: hidden; /* Ajout de cette ligne */
 }
+
+
 .firefox-mobile .box-title {
   position: relative;
   flex-shrink: 0;
@@ -81,11 +84,13 @@
 
 .firefox-mobile .weather-box {
   flex: 1;
-  overflow-y: auto; /* Permet le défilement vertical si nécessaire */
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  max-height: calc(100vh - 235px - 50px); /* Ajustez ces valeurs selon vos besoins */
+  padding-right: 5px; /* Pour éviter que le contenu ne touche la barre de défilement */
 }
 
 .firefox-mobile .weather-box > * {
