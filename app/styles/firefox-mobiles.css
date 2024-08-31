@@ -1,39 +1,52 @@
-.firefox-mobile {
-  overflow-x: hidden;
-  width: 100vw;
-  max-width: 100%;
-  position: relative;
-  background-color: #fff;
-}
-
-.firefox-mobile body,
-.firefox-mobile .app-container,
-.firefox-mobile main {
+/* Styles de base pour le corps et le HTML */
+.firefox-mobile html,
+.firefox-mobile body {
   width: 100%;
-  max-width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+
+.firefox-mobile {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
 }
 
 .firefox-mobile .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  overflow-y: hidden;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.firefox-mobile header {
+  flex-shrink: 0;
 }
 
 .firefox-mobile main {
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .firefox-mobile .container-weather {
-  width: 100%;
+  height: 100%;
   padding: 10px;
   box-sizing: border-box;
-  max-height: calc(100vh - 60px); /* Ajustez selon la hauteur de votre header et footer */
   overflow-y: auto;
+}
+
+.firefox-mobile .weather-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .firefox-mobile .image-location-container {
@@ -50,21 +63,13 @@
 .firefox-mobile .country-info {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 .firefox-mobile .country-info img {
   width: 30px;
   height: auto;
   margin-right: 10px;
-}
-
-.firefox-mobile .weather-box {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 10px;
-  align-items: center;
-  padding: 0 10px;
 }
 
 .firefox-mobile .weather-info {
@@ -82,21 +87,13 @@
 }
 
 .firefox-mobile .aside-toggle {
-  position: fixed;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1001;
   display: none;
 }
 
 .firefox-mobile footer {
-  width: 100%;
+  flex-shrink: 0;
   padding: 10px;
   box-sizing: border-box;
-  position: relative;
-  bottom: 0;
-  flex-shrink: 0;
 }
 
 .firefox-mobile .box-title {
@@ -110,7 +107,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: nowrap;
   color: black;
   border: 1px solid lightgray;
   background-color: var(--color-background-box);
@@ -141,15 +137,15 @@
     padding-left: 5px;
     padding-right: 5px;
   }
-  
-  .firefox-mobile .weather-box {
-    grid-template-columns: 1fr;
-  }
 
   .firefox-mobile .aside-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 30px;
     height: 60px;
     background-color: rgba(var(--color-primary));
@@ -158,17 +154,7 @@
     border-radius: 5px 0 0 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-
-  .firefox-mobile .aside-toggle:hover,
-  .firefox-mobile .aside-toggle:active,
-  .firefox-mobile .aside-toggle.active {
-    background-color: rgba(0, 123, 255, 1);
-  }
-
-  .firefox-mobile .aside-toggle:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+    z-index: 1001;
   }
 
   .firefox-mobile aside.mobile {
