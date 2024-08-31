@@ -158,7 +158,7 @@ header {
 
 @media (min-width: 700px) {
   header {
-    min-height: 263px; /* Ou ajustez selon vos besoins */
+    min-height: 263px; 
   }
 }
 
@@ -185,7 +185,7 @@ footer {
   justify-content: center;
   padding-bottom: 5px;
   min-height: 30px; 
-  margin-top: auto;
+  /* margin-top: auto; */
   background-color: transparent;
   font-size: 0.6rem;
   flex-wrap: wrap;
