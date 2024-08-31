@@ -304,34 +304,3 @@ footer {
   border-radius: 50%;
 }
 
-
-/* firefox mobile */
-
-.firefox-mobile .app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 212, 255, 1) 60%,
-    rgba(255, 251, 251, 1) 100%
-  );
-}
-
-.firefox-mobile header {
-  flex-shrink: 0;
-  min-height: auto;
-  padding: 0.3rem;
-}
-
-.firefox-mobile main {
-  flex: 1;
-  overflow: hidden;
-  padding: 0.3rem;
-}
-
-.firefox-mobile footer {
-  flex-shrink: 0;
-  padding: 0.3rem;
-}
