@@ -15,8 +15,13 @@
 
 html, body{
   height: 100%;
-
 }
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 
 .aside-toggle {
   display: none;
@@ -93,7 +98,10 @@ html, body{
 }
 
 .app-container {
-  /* Nouveau conteneur pour englober le contenu */
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   min-height: 100vh;
   background: linear-gradient(
     180deg,
