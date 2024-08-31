@@ -19,6 +19,8 @@ html, body{
 }
 
 body {
+  overflow-x: hidden;
+  width: 100%;
   font-family: var(--font-default);
   font-weight: var(--font-weight-regular);
   font-size: clamp(0.75rem, 2vw, 0.9rem);
@@ -101,7 +103,9 @@ body {
 }
 
 .app-container {
-  /* Nouveau conteneur pour englober le contenu */
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   height: 100%;
   overflow-y: auto;
   background: linear-gradient(
