@@ -18,12 +18,14 @@
 
 .firefox-mobile header {
   flex-shrink: 0;
-  max-height: 20vh; /* Réduit la hauteur du header */
+  max-height: 25vh; /* Ajuste la hauteur maximale du header */
+  padding: 0.3rem;
   overflow: hidden;
 }
 
 .firefox-mobile .image-location-container {
-  max-height: 20vh; /* Réduit la hauteur de l'image */
+  max-height: 25vh; /* Ajuste la hauteur maximale de l'image */
+  width: 100%;
   overflow: hidden;
 }
 
