@@ -10,7 +10,6 @@ import { useWindowSize } from "./hook/useWindowSize";
 import { weatherWithLatitudeAndLongitude } from "./functions/weatherWithLatitudeAndLongitude";
 import { fetchHeaderGeolocationPhoto } from "./functions/fetchHeaderGeolocationPhoto";
 import { handleGeolocationPermissionChange } from "./functions/handleGeolocationPermissionChange";
-import { initializeLanguageBrowser } from "@/app/store/useLanguageBrowser";
 
 import Header from "./Layout/Header/Header";
 import Footer from "./Layout/Footer/Footer";
