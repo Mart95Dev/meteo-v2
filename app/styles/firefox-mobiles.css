@@ -36,7 +36,6 @@
 
 .firefox-mobile .container-weather {
   flex: 1;
-  max-height: calc(100% - 30vh);
   display: flex;
   flex-direction: column;
   padding: 10px;
