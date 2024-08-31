@@ -17,16 +17,15 @@
 }
 
 .firefox-mobile header {
-  flex-shrink: 0;
-  max-height: 25vh; /* Ajuste la hauteur maximale du header */
-  padding: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  max-height: 25vh;
   overflow: hidden;
 }
 
 .firefox-mobile .image-location-container {
-  max-height: 25vh; /* Ajuste la hauteur maximale de l'image */
-  width: 100%;
-  overflow: hidden;
+  flex: 1;
+  min-height: 0;
 }
 
 .firefox-mobile .image-location-container img {
@@ -37,20 +36,17 @@
 
 .firefox-mobile main {
   flex: 1;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding: 0;
 }
 
 .firefox-mobile .container-weather {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 5px;
-  box-sizing: border-box;
-  overflow: hidden;
+  margin-top: 0;
 }
-
 .firefox-mobile .box-title {
   position: relative;
   flex-shrink: 0;
