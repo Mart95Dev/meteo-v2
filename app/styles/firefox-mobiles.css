@@ -16,6 +16,12 @@
   overflow: hidden;
 }
 
+.firefox-mobile header {
+  flex-shrink: 0;
+  max-height: 30vh; /* Limite la hauteur du header à 30% de la hauteur de l'écran */
+  overflow: hidden;
+}
+
 .firefox-mobile main {
   flex: 1;
   overflow: hidden;
@@ -61,6 +67,17 @@
   overflow: hidden;
 }
 
+.firefox-mobile .image-location-container {
+  max-height: 30vh; /* Limite la hauteur de l'image à 30% de la hauteur de l'écran */
+  overflow: hidden;
+}
+
+.firefox-mobile .image-location-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Ajustements pour les petits écrans */
 @media (max-width: 699px) {
   .firefox-mobile .app-container,
@@ -76,5 +93,10 @@
 
   .firefox-mobile .weather-box {
     font-size: 0.9rem;
+  }
+
+  .firefox-mobile header,
+  .firefox-mobile .image-location-container {
+    max-height: 25vh; /* Réduit encore la hauteur sur les petits écrans */
   }
 }
