@@ -14,6 +14,7 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
     useGeolocationStore();
   const { language_browser } = useLanguageBrowserStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLocationReady, setIsLocationReady] = useState(false);
 
   useEffect(() => {
     const fetchIPLocation = async () => {
@@ -57,6 +58,12 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
     fetchIPLocation();
   }, [setCoordinates, setError]);
 
+  useEffect(() => {
+    if (latitude !== null && longitude !== null && language_browser) {
+      setIsLocationReady(true);
+    }
+  }, [latitude, longitude, language_browser]);
+
   const handleContinue = async (e: React.FormEvent) => {
     e.preventDefault();
     if (latitude === null || longitude === null || !language_browser) {
@@ -86,10 +93,11 @@ export default function ModaleAlertIP({ className }: ModaleAlertIPProps) {
         <button
           type="submit"
           className="button-alert"
-          disabled={isLoading || latitude === null || longitude === null}
+          // disabled={isLoading || latitude === null || longitude === null}
+          disabled={isLoading || !isLocationReady}
         >
           {isLoading ? "Chargement..." : "Continuer"}
-        </button>        
+        </button>
       </form>
     </div>
   );
