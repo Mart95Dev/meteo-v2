@@ -15,8 +15,16 @@
 
 html, body{
   height: 100%;
+  overflow: hidden;
 }
 
+body {
+  font-family: var(--font-default);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+  min-width: 360px;
+  background-size: 100% 100%;
+}
 
 .aside-toggle {
   display: none;
@@ -94,7 +102,8 @@ html, body{
 
 .app-container {
   /* Nouveau conteneur pour englober le contenu */
-  min-height: 100vh;
+  height: 100%;
+  overflow-y: auto;
   background: linear-gradient(
     180deg,
     rgba(0, 212, 255, 1) 60%,
@@ -129,14 +138,6 @@ html, body{
  
   }
   /* //////////// */
-}
-
-body {
-  font-family: var(--font-default);
-  font-weight: var(--font-weight-regular);
-  font-size: clamp(0.75rem, 2vw, 0.9rem);
-  min-width: 360px;
-  background-size: 100% 100%;
 }
 
 header {
