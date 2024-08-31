@@ -18,12 +18,12 @@
 
 .firefox-mobile header {
   flex-shrink: 0;
-  max-height: 25vh; /* Réduit la hauteur du header */
+  max-height: 20vh; /* Réduit la hauteur du header */
   overflow: hidden;
 }
 
 .firefox-mobile .image-location-container {
-  max-height: 25vh; /* Réduit la hauteur de l'image */
+  max-height: 20vh; /* Réduit la hauteur de l'image */
   overflow: hidden;
 }
 
@@ -44,7 +44,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 5px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -58,36 +58,41 @@
 .firefox-mobile .title {
   position: static; /* Rétablit la position par défaut */
   width: 100%;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-align: center;
   padding: 5px;
+  margin-bottom: 5px;
 }
 
 .firefox-mobile .country-info {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 
 .firefox-mobile .country-info img {
-  width: 20px; /* Réduit la taille du drapeau */
+  width: 15px; /* Réduit la taille du drapeau */
   height: auto;
 }
 
 .firefox-mobile .country-info span {
-  font-size: 0.8rem; /* Réduit la taille du texte pour le pays et la ville */
+  font-size: 0.7rem; /* Réduit la taille du texte pour le pays et la ville */
 }
 
 .firefox-mobile .weather-box {
   flex: 1;
-  overflow-y: auto; /* Permet le défilement vertical */
+  overflow-y: auto; /* Permet le défilement vertical si nécessaire */
   -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-right: 5px; /* Espace pour la barre de défilement */
+  gap: 5px;
+}
+
+.firefox-mobile .weather-box > * {
+  margin: 0;
+  padding: 2px 0;
 }
 
 /* Ajustements pour les petits écrans */
@@ -99,11 +104,12 @@
     padding-right: 5px;
   }
 
-  .firefox-mobile .title {
+  .firefox-mobile .weather-box {
     font-size: 0.8rem;
   }
+}
 
-  .firefox-mobile .weather-box {
-    font-size: 0.9rem;
-  }
+.firefox-mobile footer {
+  flex-shrink: 0;
+  padding: 0.3rem;
 }

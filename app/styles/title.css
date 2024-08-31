@@ -29,3 +29,20 @@
 }
 
 
+/* firefox mobile */
+
+
+.firefox-mobile .box-title {
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.firefox-mobile .title {
+  position: static;
+  transform: none;
+  width: 100%;
+  max-width: none;
+  font-size: 0.8rem;
+  padding: 5px;
+  margin-bottom: 5px;
+}

@@ -132,3 +132,38 @@
   border-radius: 3px;
   padding: 3px;
 }
+
+/* firefox mobile */
+
+
+.firefox-mobile .weather-box {
+  display: flex;
+  flex-direction: column;
+  min-height: auto;
+  max-height: none;
+  padding: 5px;
+  gap: 5px;
+}
+
+.firefox-mobile .weather-box > * {
+  margin: 0;
+  padding: 2px 0;
+}
+
+.firefox-mobile .country-flag,
+.firefox-mobile .country-name,
+.firefox-mobile .capital-name {
+  min-height: auto;
+  padding-bottom: 5px;
+}
+
+.firefox-mobile .temperature-label,
+.firefox-mobile .climate-label {
+  min-height: auto;
+  margin-bottom: 2px;
+}
+
+.firefox-mobile .weather-data {
+  margin-left: 5px;
+  padding: 2px;
+}
