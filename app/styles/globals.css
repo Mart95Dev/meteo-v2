@@ -63,7 +63,7 @@ body {
   .aside-toggle:active,
   .aside-toggle.active {
     background-color: rgba(0, 123, 255, 1);
-
+  }
   .aside-toggle:focus {
     outline: none; 
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); 
