@@ -13,6 +13,11 @@
   margin: 0;
 }
 
+html, body{
+  height: 100%;
+
+}
+
 .aside-toggle {
   display: none;
 }

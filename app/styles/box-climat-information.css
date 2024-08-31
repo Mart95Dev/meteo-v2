@@ -3,7 +3,7 @@
 .weather-box { 
   flex-grow: 1;
   min-height: 260px;
-  max-height: none;
+  max-height: 345px;
   padding: 0px 0 10px 0;
   display: grid;
   grid-template-columns: 15% 10% 25% 9% 25% 21%;
