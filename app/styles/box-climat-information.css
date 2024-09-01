@@ -141,6 +141,7 @@
   background-color: rgba(var(--color-data));
   border-radius: 3px;
   padding: 3px;
+  display: flex;
 }
 
 /* firefox mobile */
@@ -287,16 +288,6 @@
 @media (max-width: 699px) {
   .weather-box {
     grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "country-flag country-flag country-flag country-flag country-flag country-flag"
-      "country-name . . capital-name . ."
-      "weather-type weather-type weather-type weather-type weather-type weather-type"
-      "weather-icon . temperature-label . climate-label ."
-      "weather-icon . . . rain ."
-      "weather-icon . real-feel . . ."
-      "weather-icon . . . wind ."
-      "weather-icon . feels-like . . ."
-      "weather-icon . . . humidity ";
+    grid-template-rows: auto;    
   }
 }
