@@ -185,8 +185,7 @@ export default function Home() {
       >
         <IconAnimation />
       </div>
-
-      {/* <div className="app-container">
+      <div className="app-container">
         <Header />
         <main className="lato-regular">
           {!isGeolocationEnabled && (
@@ -197,55 +196,26 @@ export default function Home() {
             />
           )}
 
-          {isGeolocationEnabled && !isWeatherDataLoading && (
+          {isGeolocationEnabled && (
             <div
               className={`container-weather ${
-                isGeolocationEnabled && !isWeatherDataLoading
-                  ? "fade-in data-loaded"
-                  : "fade-out"
+                isGeolocationEnabled ? "fade-in" : "fade-out"
               }`}
             >
               <Title level={2}>
                 <span>Météo basée sur votre position</span>
               </Title>
-              <GeolocationClimatCountryWeather />
+              {isWeatherDataLoading ? (
+                <p>Chargement des données météo...</p>
+              ) : (
+                <GeolocationClimatCountryWeather />
+              )}
             </div>
           )}
         </main>
         {showAside || isMobile ? <Aside isMobile={isMobile} /> : null}
         <Footer />
-      </div> */}
-             <div className="app-container">
-         <Header />
-         <main className="lato-regular">
-           {!isGeolocationEnabled && (
-             <ModaleAlertIP
-               className={`modale-alert ${
-                 !isGeolocationEnabled ? "fade-in" : "fade-out"
-               }`}
-             />
-           )}
- 
-           {isGeolocationEnabled && (
-             <div
-               className={`container-weather ${
-                 isGeolocationEnabled ? "fade-in" : "fade-out"
-               }`}
-             >
-               <Title level={2}>
-                 <span>Météo basée sur votre position</span>
-               </Title>
-               {isWeatherDataLoading ? (
-                 <p>Chargement des données météo...</p>
-               ) : (
-                 <GeolocationClimatCountryWeather />
-               )}
-             </div>
-           )}
-         </main>
-         {showAside || isMobile ? <Aside isMobile={isMobile} /> : null}
-         <Footer />
-       </div>
+      </div>
     </>
   );
 }
