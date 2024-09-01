@@ -1,6 +1,6 @@
 /* ////Box Climat Country Information////// */
 
-.weather-box { 
+.weather-box {
   flex-grow: 1;
   min-height: 260px;
   max-height: 345px;
@@ -173,48 +173,48 @@
     display: flex;
   }
 
-  .firefox-mobile .country-name { 
-    grid-area: country-name; 
+  .firefox-mobile .country-name {
+    grid-area: country-name;
   }
 
-  .firefox-mobile .capital-name { 
-    grid-area: capital-name; 
+  .firefox-mobile .capital-name {
+    grid-area: capital-name;
   }
 
-  .firefox-mobile .weather-type { 
-    grid-area: weather-type; 
+  .firefox-mobile .weather-type {
+    grid-area: weather-type;
   }
 
-  .firefox-mobile .weather-icon { 
-    grid-area: weather-icon; 
+  .firefox-mobile .weather-icon {
+    grid-area: weather-icon;
   }
 
-  .firefox-mobile .temperature-label { 
-    grid-area: temperature-label; 
+  .firefox-mobile .temperature-label {
+    grid-area: temperature-label;
   }
 
-  .firefox-mobile .climate-label { 
-    grid-area: climate-label; 
+  .firefox-mobile .climate-label {
+    grid-area: climate-label;
   }
 
-  .firefox-mobile .real-feel { 
-    grid-area: real-feel; 
+  .firefox-mobile .real-feel {
+    grid-area: real-feel;
   }
 
-  .firefox-mobile .feels-like { 
-    grid-area: feels-like; 
+  .firefox-mobile .feels-like {
+    grid-area: feels-like;
   }
 
-  .firefox-mobile .rain { 
-    grid-area: rain; 
+  .firefox-mobile .rain {
+    grid-area: rain;
   }
 
-  .firefox-mobile .wind { 
-    grid-area: wind; 
+  .firefox-mobile .wind {
+    grid-area: wind;
   }
 
-  .firefox-mobile .humidity { 
-    grid-area: humidity; 
+  .firefox-mobile .humidity {
+    grid-area: humidity;
   }
 
   .firefox-mobile .country-name,
@@ -250,6 +250,24 @@
     background-color: rgba(0, 212, 255, 0.2);
     border-radius: 3px;
     margin-left: 5px;
+  }
+
+  .firefox-mobile .real-feel {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .firefox-mobile .real-feel span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .firefox-mobile .real-feel .weather-data {
+    margin-left: 5px;
+    flex-shrink: 0;
   }
 }
 
