@@ -287,7 +287,16 @@
 @media (max-width: 699px) {
   .weather-box {
     grid-template-columns: auto;
-                          /* 14% 7% 23% 7% 29% 20%;   */
-                         /*15% 10% 25% 9% 25% 21% */
+    grid-template-rows: auto;
+    grid-template-areas:
+      "country-flag country-flag country-flag country-flag country-flag country-flag"
+      "country-name . . capital-name . ."
+      "weather-type weather-type weather-type weather-type weather-type weather-type"
+      "weather-icon . temperature-label . climate-label ."
+      "weather-icon . . . rain ."
+      "weather-icon . real-feel . . ."
+      "weather-icon . . . wind ."
+      "weather-icon . feels-like . . ."
+      "weather-icon . . . humidity ";
   }
 }
