@@ -51,20 +51,24 @@
 }
 
 .firefox-mobile .country-info {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin-bottom: 5px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .firefox-mobile .country-info img {
-  width: 15px;
+  width: 30px;
   height: auto;
+  justify-self: center;
 }
 
-.firefox-mobile .country-info span {
-  font-size: 0.7rem;
+.firefox-mobile .country-info .country,
+.firefox-mobile .country-info .city {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .firefox-mobile .weather-box {
@@ -79,12 +83,165 @@
   padding: 2px 0;
 }
 
+.firefox-mobile .weather-type {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.firefox-mobile .weather-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.firefox-mobile .weather-icon img {
+  width: 50px;
+  height: auto;
+}
+
+.firefox-mobile .weather-data {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.firefox-mobile .temperature,
+.firefox-mobile .climate {
+  display: flex;
+  flex-direction: column;
+}
+
+.firefox-mobile .temperature h3,
+.firefox-mobile .climate h3 {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.firefox-mobile .temperature p,
+.firefox-mobile .climate p {
+  font-size: 0.8rem;
+  margin: 2px 0;
+}
+
 .firefox-mobile footer {
   flex-shrink: 0;
   padding: 0.3rem;
 }
 
 @media (max-width: 699px) {
+  .firefox-mobile .weather-box {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    max-height: none;
+    padding: 5px;
+    gap: 5px;
+  }
+
+  .firefox-mobile .country-info {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .firefox-mobile .country-flag {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .firefox-mobile .country-name {
+    grid-column: 2;
+  }
+
+  .firefox-mobile .capital-name {
+    grid-column: 3;
+  }
+
+  .firefox-mobile .country-flag,
+  .firefox-mobile .country-name,
+  .firefox-mobile .capital-name {
+    min-height: auto;
+    padding-bottom: 5px;
+    margin-left: 0;
+  }
+
+  .firefox-mobile .country-info img {
+    width: 30px;
+    height: auto;
+  }
+
+  .firefox-mobile .weather-type {
+    text-align: center;
+    background-color: var(--color-input-background);
+    padding: 5px;
+    margin-bottom: 10px;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .firefox-mobile .weather-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    background: none;
+  }
+
+  .firefox-mobile .weather-icon img {
+    width: 50px;
+    height: auto;
+  }
+
+  .firefox-mobile .weather-data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .firefox-mobile .temperature,
+  .firefox-mobile .climate {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .firefox-mobile .temperature-label,
+  .firefox-mobile .climate-label {
+    text-decoration: underline;
+    margin-bottom: 5px;
+    min-height: auto;
+  }
+
+  .firefox-mobile .temperature h3,
+  .firefox-mobile .climate h3,
+  .firefox-mobile .temperature-label,
+  .firefox-mobile .climate-label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+
+  .firefox-mobile .temperature p,
+  .firefox-mobile .climate p,
+  .firefox-mobile .rain,
+  .firefox-mobile .wind,
+  .firefox-mobile .real-feel,
+  .firefox-mobile .feels-like,
+  .firefox-mobile .humidity {
+    font-size: 0.8rem;
+    margin: 2px 0;
+    width: auto;
+  }
+
+  .firefox-mobile .weather-data {
+    margin-left: 5px;
+    padding: 2px;
+    font-weight: bold;
+    background-color: var(--color-style);
+    border-radius: 3px;
+  }
+
   .firefox-mobile .app-container,
   .firefox-mobile main,
   .firefox-mobile .container-weather {

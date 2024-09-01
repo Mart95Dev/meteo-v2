@@ -6,6 +6,7 @@
   max-height: 345px;
   padding: 0px 0 10px 0;
   display: grid;
+  -moz-display: grid;
   grid-template-columns: 15% 10% 25% 9% 25% 21%;
   grid-template-rows: repeat(8, 1fr);
   grid-template-areas:
@@ -19,7 +20,7 @@
     "weather-icon . . . humidity .";
 }
 
-.weather-box-disabled{
+.weather-box-disabled {
   display: none;
 }
 
@@ -66,15 +67,18 @@
   grid-column: 1 / 3;
   margin: auto;
 }
+
 .country-name {
   grid-area: country-name;
   grid-column: 3 / 5;
 }
+
 .capital-name {
   grid-area: capital-name;
   grid-column: 5 / 7;
   max-width: 87%;
 }
+
 .weather-type {
   grid-area: weather-type;
   display: flex;
@@ -84,38 +88,45 @@
   max-width: 95.1%;
   background-color: var(--color-input-background);
 }
+
 .weather-icon {
   grid-area: weather-icon;
   background: none;
   grid-column: 1 / 3;
   margin: auto;
 }
+
 .temperature-label {
   grid-area: temperature-label;
 }
+
 .climate-label {
   grid-area: climate-label;
 }
+
 .rain {
   grid-area: rain;
-  grid-column: 5/7;
+  grid-column: 5 / 7;
 }
+
 .wind {
   grid-area: wind;
-  grid-column: 5/7;
+  grid-column: 5 / 7;
 }
+
 .real-feel {
   grid-area: real-feel;
-  grid-column: 3/5;
+  grid-column: 3 / 5;
 }
 
 .feels-like {
   grid-area: feels-like;
-  grid-column: 3/5;
+  grid-column: 3 / 5;
 }
+
 .humidity {
   grid-area: humidity;
-  grid-column: 5/7;
+  grid-column: 5 / 7;
 }
 
 .rain,
@@ -127,43 +138,130 @@
 .weather-data {
   font-weight: bold;
   margin-left: 10px;
-  /* border: 1px solid var(--color-style); */
-  background-color:var(--color-style);
+  background-color: rgba(var(--color-data));
   border-radius: 3px;
   padding: 3px;
 }
 
 /* firefox mobile */
+@media (max-width: 699px) {
+  .firefox-mobile .weather-box {
+    flex-grow: 1;
+    min-height: 260px;
+    max-height: 345px;
+    padding: 0px 0 10px 0;
+    display: grid;
+    -moz-display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, auto);
+    grid-auto-flow: row;
+    grid-template-areas:
+      "country-flag country-flag country-flag country-flag country-flag country-flag"
+      "country-name  . . capital-name . ."
+      "weather-type weather-type weather-type weather-type weather-type weather-type"
+      "weather-icon weather-icon weather-icon weather-icon weather-icon weather-icon"
+      "temperature-label temperature-label . . climate-label climate-label"
+      "real-feel . . rain . ."
+      "feels-like . . wind . ."
+      ". . . humidity . .";
+    gap: 5px;
+  }
 
+  .firefox-mobile .country-flag {
+    grid-area: country-flag;
+    justify-content: center;
+    display: flex;
+  }
 
-.firefox-mobile .weather-box {
-  display: flex;
-  flex-direction: column;
-  min-height: auto;
-  max-height: none;
-  padding: 5px;
-  gap: 5px;
+  .firefox-mobile .country-name { 
+    grid-area: country-name; 
+  }
+
+  .firefox-mobile .capital-name { 
+    grid-area: capital-name; 
+  }
+
+  .firefox-mobile .weather-type { 
+    grid-area: weather-type; 
+  }
+
+  .firefox-mobile .weather-icon { 
+    grid-area: weather-icon; 
+  }
+
+  .firefox-mobile .temperature-label { 
+    grid-area: temperature-label; 
+  }
+
+  .firefox-mobile .climate-label { 
+    grid-area: climate-label; 
+  }
+
+  .firefox-mobile .real-feel { 
+    grid-area: real-feel; 
+  }
+
+  .firefox-mobile .feels-like { 
+    grid-area: feels-like; 
+  }
+
+  .firefox-mobile .rain { 
+    grid-area: rain; 
+  }
+
+  .firefox-mobile .wind { 
+    grid-area: wind; 
+  }
+
+  .firefox-mobile .humidity { 
+    grid-area: humidity; 
+  }
+
+  .firefox-mobile .country-name,
+  .firefox-mobile .capital-name,
+  .firefox-mobile .real-feel,
+  .firefox-mobile .feels-like,
+  .firefox-mobile .rain,
+  .firefox-mobile .wind,
+  .firefox-mobile .humidity {
+    display: flex;
+    align-items: center;
+  }
+
+  .firefox-mobile .weather-type {
+    text-align: center;
+  }
+
+  .firefox-mobile .weather-icon {
+    font-size: 1rem;
+    justify-content: center;
+    display: flex;
+  }
+
+  .firefox-mobile .temperature-label,
+  .firefox-mobile .climate-label {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .firefox-mobile .weather-data {
+    font-size: 0.9rem;
+    padding: 2px 4px;
+    background-color: rgba(0, 212, 255, 0.2);
+    border-radius: 3px;
+    margin-left: 5px;
+  }
 }
 
-.firefox-mobile .weather-box > * {
-  margin: 0;
-  padding: 2px 0;
-}
+/* Fallback Flexbox for older browsers */
+@supports not (display: grid) {
+  .weather-box {
+    display: flex;
+    flex-direction: column;
+  }
 
-.firefox-mobile .country-flag,
-.firefox-mobile .country-name,
-.firefox-mobile .capital-name {
-  min-height: auto;
-  padding-bottom: 5px;
-}
-
-.firefox-mobile .temperature-label,
-.firefox-mobile .climate-label {
-  min-height: auto;
-  margin-bottom: 2px;
-}
-
-.firefox-mobile .weather-data {
-  margin-left: 5px;
-  padding: 2px;
+  .firefox-mobile .weather-box {
+    display: flex;
+    flex-direction: column;
+  }
 }
