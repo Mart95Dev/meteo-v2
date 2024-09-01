@@ -1,9 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import Head from 'next/head'
+
 import "./styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "Weather APP",
-  description: "Climat countries or cities informations",  
+  title: "WeatherMap",
+  description: "geolocation weather", 
+  icons: {
+    icon: "/favicon/weathermap.ico",
+  }, 
 };
 
 export const viewport: Viewport = {
@@ -19,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr">       
       <body>{children}</body>
     </html>
   );
