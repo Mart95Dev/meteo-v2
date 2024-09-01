@@ -286,6 +286,7 @@
 
 @media (max-width: 699px) {
   .weather-box {
-    grid-template-columns: 15% 9% 25% 7% 25% 19%;  /*15% 10% 25% 9% 25% 21% */
+    grid-template-columns: 14% 7% 23% 7% 29% 20%;  
+                         /*15% 10% 25% 9% 25% 21% */
   }
 }
