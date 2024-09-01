@@ -283,3 +283,9 @@
     flex-direction: column;
   }
 }
+
+@media (max-width: 699px) {
+  .weather-box {
+    grid-template-columns: 20% 10% 30% 10% 30%;
+  }
+}
